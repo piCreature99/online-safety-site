@@ -366,7 +366,7 @@ export function VideoSection() {
             >
               <video
                 ref={videoRef}
-                src="/videos/AnToanSo.webm"
+                src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/AnToanSo.webm"
                 className="w-full h-full object-cover"
                 // autoPlay
                 loop
@@ -594,7 +594,7 @@ export function ScenarioVideoSection() {
             >
               <video
                 ref={videoRef}
-                src="/videos/Scenario.webm"
+                src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/Scenario.webm"
                 className="w-full h-full object-cover transform-gpu will-change-transform"
                 // autoPlay
                 loop
