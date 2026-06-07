@@ -20,6 +20,7 @@
 		// React Router wakes up, looks at the URL bar, sees /login, and says: "Oh, I know what to do! I'll show the LoginPage component."
 	},
 	// ADD THIS SECTION BELOW:
+    // Hello
 	"d1_databases": [
 		// {
 		// 	"binding": "DB",
