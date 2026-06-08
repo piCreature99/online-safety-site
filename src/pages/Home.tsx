@@ -234,6 +234,263 @@ function HeroSection() {
 // Mock components assuming they exist in your codebase
 // import { FloatingParticles } from './FloatingParticles'; 
 
+// export function VideoSection() {
+//   const ref = useRef<HTMLElement>(null);
+//   const videoRef = useRef<HTMLVideoElement>(null);
+//   const videoContainerRef = useRef<HTMLDivElement>(null);
+
+//   // Video Player States
+//   const [isPlaying, setIsPlaying] = useState(false);
+//   const [isMuted, setIsMuted] = useState(true);
+//   const [currentTime, setCurrentTime] = useState(0);
+//   const [duration, setDuration] = useState(0);
+
+//   useEffect(() => {
+//     const ctx = gsap.context(() => {
+//       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+//       tl.from('.hero-title span', { y: 60, opacity: 0, duration: 0.8, stagger: 0.06 })
+//         .from('.hero-subtitle', { y: 30, opacity: 0, duration: 0.6 }, '-=0.3')
+//         .from('.hero-desc', { y: 20, opacity: 0, duration: 0.5 }, '-=0.2')
+//         .from('.hero-card', { scale: 0.8, opacity: 0, duration: 0.5, stagger: 0.1 }, '-=0.2')
+//         .from('.hero-video-stage', { x: -80, opacity: 0, duration: 1 }, 0.3);
+//     }, ref);
+
+//     return () => ctx.revert();
+//   }, []);
+
+//   // Sync progress bar timeline updates
+//   const handleTimeUpdate = () => {
+//     if (videoRef.current) {
+//       setCurrentTime(videoRef.current.currentTime);
+//     }
+//   };
+
+//   const handleLoadedMetadata = () => {
+//     if (videoRef.current) {
+//       setDuration(videoRef.current.duration);
+//     }
+//   };
+
+//   // Scrubber control click logic
+//   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     if (videoRef.current) {
+//       const newTime = parseFloat(e.target.value);
+//       videoRef.current.currentTime = newTime;
+//       setCurrentTime(newTime);
+//     }
+//   };
+
+//   const togglePlay = () => {
+//     if (!videoRef.current) return;
+//     if (isPlaying) {
+//       videoRef.current.pause();
+//     } else {
+//       videoRef.current.play().catch(() => { });
+//     }
+//     setIsPlaying(!isPlaying);
+//   };
+
+//   const toggleMute = () => {
+//     if (!videoRef.current) return;
+//     videoRef.current.muted = !isMuted;
+//     setIsMuted(!isMuted);
+//   };
+
+//   const toggleFullscreen = () => {
+//     if (!videoContainerRef.current) return;
+
+//     if (!document.fullscreenElement) {
+//       videoContainerRef.current.requestFullscreen().catch((err) => {
+//         console.error(`Error attempting to enable fullscreen: ${err.message}`);
+//       });
+//     } else {
+//       document.exitFullscreen();
+//     }
+//   };
+
+//   // Helper formatting utility (e.g., convert 75s to 01:15)
+//   const formatTime = (timeInSeconds: number) => {
+//     if (isNaN(timeInSeconds)) return '00:00';
+//     const minutes = Math.floor(timeInSeconds / 60);
+//     const seconds = Math.floor(timeInSeconds % 60);
+//     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+//   };
+
+//   const blockSlideTrigger = (e: React.MouseEvent) => {
+//     e.preventDefault();
+//     e.stopPropagation(); // Kills the event cascade here
+//   };
+
+//   return (
+//     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-cream">
+//       <FloatingParticles count={25} color="#C4882B" />
+//       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 py-16 lg:py-0">
+//         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+
+//           {/* LEFT COLUMN: Updated Copy Context */}
+//           <div className="order-1 lg:order-1 space-y-5">
+//             <div className="hero-title">
+//               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-ink uppercase leading-[1.1] tracking-tight">
+//                 <span className="inline-block">CẨM</span>{' '}<span className="inline-block">NANG</span>{' '}
+//                 <br className="hidden sm:block" />
+//                 <span className="inline-block text-indigo-500">AN TOÀN</span>{' '}<span className="inline-block text-indigo-500">SỐ</span>
+//                 <br className="hidden sm:block" />
+//                 <span className="inline-block">KỶ NGUYÊN</span>{' '}<span className="inline-block">MỚI</span>
+//               </h1>
+//             </div>
+
+//             <p className="hero-subtitle text-base sm:text-lg lg:text-xl text-ink-light font-medium">
+//               Xem video hướng dẫn xây dựng lá chắn bảo vệ danh tính trực tuyến
+//             </p>
+
+//             <p className="hero-desc text-sm text-ink-muted max-w-lg">
+//               Không gian mạng mang lại nhiều giá trị nhưng cũng tiềm ẩn rủi ro lừa đảo công nghệ cao phức tạp.
+//               Hãy dành 4 phút theo dõi video nhạc cùng giai điệu và hình ảnh trực quan về hiện thưc chuyển đổi số và các rủi ro tiềm ẩn.
+//             </p>
+
+//             <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
+//               {[
+//                 { icon: <Eye className="w-5 h-5" />, text: 'NHẬN DIỆN MỐI ĐE DỌA' },
+//                 { icon: <Key className="w-5 h-5" />, text: 'THIẾT LẬP HÀNG RÀO' },
+//                 { icon: <ShieldCheck className="w-5 h-5" />, text: 'DUY TRÌ AN TOÀN' },
+//                 { icon: <Zap className="w-5 h-5" />, text: 'HÀNH ĐỘNG NGAY' },
+//               ].map((item, i) => (
+//                 <div key={i} className="hero-card bg-white rounded-xl p-3 sm:p-4 shadow-sm flex items-center gap-2 sm:gap-3 hover:shadow-md hover:-translate-y-1 transition-all border border-border cursor-default">
+//                   <span className="text-amber flex-shrink-0">{item.icon}</span>
+//                   <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-ink leading-tight">{item.text}</span>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+
+//           {/* RIGHT COLUMN: Advanced Video Stage */}
+//           <div className="relative order-2 lg:order-2 hero-video-stage">
+//             <div
+//               ref={videoContainerRef}
+//               className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl bg-black group border border-border transition-all"
+//               onClick={blockSlideTrigger}
+//               onMouseDown={blockSlideTrigger}
+//               onMouseUp={blockSlideTrigger}
+//             >
+//               <video
+//                 ref={videoRef}
+//                 src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/AnToanSo.webm"
+//                 className="w-full h-full object-cover pointer-events-none z-50"
+//                 // autoPlay
+//                 loop
+//                 muted
+//                 playsInline
+//                 onTimeUpdate={handleTimeUpdate}
+//                 onLoadedMetadata={handleLoadedMetadata}
+//               />
+
+//               {/* Overlay HUD Layer */}
+//               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 z-10">
+
+//                 {/* Header Sub-Badge */}
+//                 <div className="flex justify-between items-start">
+//                   <span className="bg-amber/95 backdrop-blur-sm text-white font-bold text-[10px] tracking-wider px-2.5 py-1 rounded-md uppercase">
+//                     Chiến dịch An Toàn Số
+//                   </span>
+//                 </div>
+
+//                 {/* Big Center Quick Play Toggle */}
+//                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+//                   <button
+//                     onClick={togglePlay}
+//                     className="flex items-center justify-center w-14 h-14 rounded-full bg-amber text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-200"
+//                   >
+//                     {isPlaying ? <Pause className="w-6 h-6 fill-white" /> : <Play className="w-6 h-6 fill-white translate-x-0.5" />}
+//                   </button>
+//                 </div>
+
+//                 {/* Lower Custom Media Control Dash */}
+//                 <div className="w-full space-y-2.5 mt-auto">
+
+//                   {/* Custom Progress Scrubber Bar */}
+//                   <div className="flex items-center gap-3">
+//                     <input
+//                       type="range"
+//                       min="0"
+//                       max={duration || 100}
+//                       value={currentTime}
+//                       onChange={handleSeek}
+//                       className="w-full h-1.5 bg-white/30 rounded-lg appearance-none cursor-pointer accent-amber focus:outline-none transition-colors"
+//                       style={{
+//                         background: `linear-gradient(to right, #C4882B 0%, #C4882B ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) 100%)`
+//                       }}
+//                     />
+//                   </div>
+
+//                   {/* System Level Controls Panel */}
+//                   <div className="flex items-center justify-between text-white">
+//                     <div className="flex items-center gap-4">
+//                       <button onClick={togglePlay} className="hover:text-amber transition-colors">
+//                         {isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white" />}
+//                       </button>
+
+//                       {/* VOLUME CONTROLLER GROUP */}
+//                       <div className="flex items-center gap-2 group/volume">
+//                         <button onClick={toggleMute} className="hover:text-amber transition-colors flex-shrink-0">
+//                           {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+//                         </button>
+
+//                         {/* Dynamic Volume Slider Bar */}
+//                         <input
+//                           type="range"
+//                           min="0"
+//                           max="1"
+//                           step="0.05"
+//                           value={isMuted ? 0 : videoRef.current?.volume ?? 1}
+//                           onChange={(e) => {
+//                             if (videoRef.current) {
+//                               const val = parseFloat(e.target.value);
+//                               videoRef.current.volume = val;
+//                               videoRef.current.muted = val === 0;
+//                               setIsMuted(val === 0);
+//                             }
+//                           }}
+//                           className="w-0 opacity-0 group-hover/volume:w-16 group-hover/volume:opacity-100 focus:w-16 focus:opacity-100 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-amber transition-all duration-300 ease-out"
+//                           style={{
+//                             background: `linear-gradient(to right, #C4882B 0%, #C4882B ${(isMuted ? 0 : (videoRef.current?.volume ?? 1)) * 100}%, rgba(255,255,255,0.3) ${(isMuted ? 0 : (videoRef.current?.volume ?? 1)) * 100}%, rgba(255,255,255,0.3) 100%)`
+//                           }}
+//                         />
+//                       </div>
+
+//                       <div className="text-xs font-mono tracking-wide text-white/90">
+//                         <span>{formatTime(currentTime)}</span>
+//                         <span className="mx-1 text-white/40">/</span>
+//                         <span>{formatTime(duration)}</span>
+//                       </div>
+//                     </div>
+
+//                     <button onClick={toggleFullscreen} className="hover:text-amber transition-colors p-0.5">
+//                       <Maximize className="w-5 h-5" />
+//                     </button>
+//                   </div>
+//                 </div>
+
+//               </div>
+//             </div>
+
+//             {/* floating Data Metric Badge */}
+//             <div className="absolute transform rotate-6 -top-4 -right-4 shadow-lg">
+//               <div className=" -top-4 -right-4 bg-indigo-500 text-white rounded-xl px-4 py-2 shadow-lg hidden sm:block animate-[bounce_3s_infinite] z-20">
+
+//                 <p className="text-xl font-black">Music Video</p>
+//                 {/* <p className="text-[10px] opacity-90">lừa đảo tài chính</p> */}
+//               </div>
+//             </div>
+//           </div>
+
+
+
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 export function VideoSection() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -244,6 +501,10 @@ export function VideoSection() {
   const [isMuted, setIsMuted] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+
+  // 🚀 SỬA LỖI 1: Tạo trạng thái phản xạ (reactive state) riêng cho âm lượng 
+  // Tránh việc đọc trực tiếp thuộc tính biến đổi 'videoRef.current.volume' trong JSX
+  const [volume, setVolume] = useState(1);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -257,6 +518,14 @@ export function VideoSection() {
     }, ref);
 
     return () => ctx.revert();
+  }, []);
+
+  // Đảm bảo trạng thái ban đầu của thẻ video đồng bộ với React State
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+      videoRef.current.volume = volume;
+    }
   }, []);
 
   // Sync progress bar timeline updates
@@ -281,7 +550,13 @@ export function VideoSection() {
     }
   };
 
-  const togglePlay = () => {
+  const togglePlay = (e?: React.MouseEvent) => {
+    // Chặn đổi slide khi nhấn nút play lớn hoặc nút điều khiển nhỏ
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
@@ -291,13 +566,26 @@ export function VideoSection() {
     setIsPlaying(!isPlaying);
   };
 
-  const toggleMute = () => {
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation(); // Cô lập sự kiện click chuột trái đổi slide
+    }
+
     if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
+    const nextMuteState = !isMuted;
+    videoRef.current.muted = nextMuteState;
+    setIsMuted(nextMuteState);
+
+    // Nếu bỏ tắt tiếng khi thanh âm lượng đang ở đáy, đẩy nhẹ lên mức nghe được
+    if (!nextMuteState && volume === 0) {
+      videoRef.current.volume = 0.5;
+      setVolume(0.5);
+    }
   };
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (!videoContainerRef.current) return;
 
     if (!document.fullscreenElement) {
@@ -309,7 +597,6 @@ export function VideoSection() {
     }
   };
 
-  // Helper formatting utility (e.g., convert 75s to 01:15)
   const formatTime = (timeInSeconds: number) => {
     if (isNaN(timeInSeconds)) return '00:00';
     const minutes = Math.floor(timeInSeconds / 60);
@@ -317,13 +604,18 @@ export function VideoSection() {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const blockSlideTrigger = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation(); // Tường lửa chặn đứng thác tác động lên khung slide cha
+  };
+
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-cream">
-      <FloatingParticles count={25} color="#C4882B" />
+      {/* <FloatingParticles count={25} color="#C4882B" /> */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 py-16 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
-          {/* LEFT COLUMN: Updated Copy Context */}
+          {/* LEFT COLUMN: Copy Context */}
           <div className="order-1 lg:order-1 space-y-5">
             <div className="hero-title">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-ink uppercase leading-[1.1] tracking-tight">
@@ -364,14 +656,16 @@ export function VideoSection() {
             <div
               ref={videoContainerRef}
               className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl bg-black group border border-border transition-all"
+              onClick={blockSlideTrigger}
+              onMouseDown={blockSlideTrigger}
+              onMouseUp={blockSlideTrigger}
             >
               <video
                 ref={videoRef}
                 src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/AnToanSo.webm"
-                className="w-full h-full object-cover"
-                // autoPlay
+                className="w-full h-full object-cover pointer-events-none z-50"
                 loop
-                muted
+                muted={isMuted}
                 playsInline
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
@@ -390,7 +684,8 @@ export function VideoSection() {
                 {/* Big Center Quick Play Toggle */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   <button
-                    onClick={togglePlay}
+                    type="button"
+                    onClick={(e) => togglePlay(e)}
                     className="flex items-center justify-center w-14 h-14 rounded-full bg-amber text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-200"
                   >
                     {isPlaying ? <Pause className="w-6 h-6 fill-white" /> : <Play className="w-6 h-6 fill-white translate-x-0.5" />}
@@ -407,6 +702,13 @@ export function VideoSection() {
                       min="0"
                       max={duration || 100}
                       value={currentTime}
+
+                      // 🚀 SỬA LỖI: Cô lập hoàn toàn các sự kiện chuột tại thanh tiến độ
+                      // Ngăn không cho khung div cha can thiệp vào hành vi kéo thả slider
+                      onClick={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onMouseUp={(e) => e.stopPropagation()}
+
                       onChange={handleSeek}
                       className="w-full h-1.5 bg-white/30 rounded-lg appearance-none cursor-pointer accent-amber focus:outline-none transition-colors"
                       style={{
@@ -418,14 +720,14 @@ export function VideoSection() {
                   {/* System Level Controls Panel */}
                   <div className="flex items-center justify-between text-white">
                     <div className="flex items-center gap-4">
-                      <button onClick={togglePlay} className="hover:text-amber transition-colors">
+                      <button type="button" onClick={(e) => togglePlay(e)} className="hover:text-amber transition-colors">
                         {isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white" />}
                       </button>
 
                       {/* VOLUME CONTROLLER GROUP */}
                       <div className="flex items-center gap-2 group/volume">
-                        <button onClick={toggleMute} className="hover:text-amber transition-colors flex-shrink-0">
-                          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                        <button type="button" onClick={(e) => toggleMute(e)} className="hover:text-amber transition-colors flex-shrink-0">
+                          {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                         </button>
 
                         {/* Dynamic Volume Slider Bar */}
@@ -434,18 +736,27 @@ export function VideoSection() {
                           min="0"
                           max="1"
                           step="0.05"
-                          value={isMuted ? 0 : videoRef.current?.volume ?? 1}
+                          value={isMuted ? 0 : volume} // 🚀 Khớp nối thẳng vào state 'volume'
+                          // 🚀 SỬA LỖI 3: Chặn đứng sự kiện nổi bọt kéo chuột của thanh âm lượng tại chỗ
+                          onClick={(e) => e.stopPropagation()}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          onMouseUp={(e) => e.stopPropagation()}
                           onChange={(e) => {
+                            e.stopPropagation(); // Bảo vệ luồng dữ liệu thay đổi
                             if (videoRef.current) {
                               const val = parseFloat(e.target.value);
                               videoRef.current.volume = val;
-                              videoRef.current.muted = val === 0;
-                              setIsMuted(val === 0);
+
+                              const shouldMute = val === 0;
+                              videoRef.current.muted = shouldMute;
+
+                              setVolume(val);
+                              setIsMuted(shouldMute);
                             }
                           }}
                           className="w-0 opacity-0 group-hover/volume:w-16 group-hover/volume:opacity-100 focus:w-16 focus:opacity-100 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-amber transition-all duration-300 ease-out"
                           style={{
-                            background: `linear-gradient(to right, #C4882B 0%, #C4882B ${(isMuted ? 0 : (videoRef.current?.volume ?? 1)) * 100}%, rgba(255,255,255,0.3) ${(isMuted ? 0 : (videoRef.current?.volume ?? 1)) * 100}%, rgba(255,255,255,0.3) 100%)`
+                            background: `linear-gradient(to right, #C4882B 0%, #C4882B ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.3) ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.3) 100%)`
                           }}
                         />
                       </div>
@@ -457,7 +768,7 @@ export function VideoSection() {
                       </div>
                     </div>
 
-                    <button onClick={toggleFullscreen} className="hover:text-amber transition-colors p-0.5">
+                    <button type="button" onClick={(e) => toggleFullscreen(e)} className="hover:text-amber transition-colors p-0.5">
                       <Maximize className="w-5 h-5" />
                     </button>
                   </div>
@@ -466,17 +777,13 @@ export function VideoSection() {
               </div>
             </div>
 
-            {/* floating Data Metric Badge */}
+            {/* Floating Data Metric Badge */}
             <div className="absolute transform rotate-6 -top-4 -right-4 shadow-lg">
-              <div className=" -top-4 -right-4 bg-indigo-500 text-white rounded-xl px-4 py-2 shadow-lg hidden sm:block animate-[bounce_3s_infinite] z-20">
-
+              <div className="bg-indigo-500 text-white rounded-xl px-4 py-2 shadow-lg hidden sm:block animate-[bounce_3s_infinite] z-20">
                 <p className="text-xl font-black">Music Video</p>
-                {/* <p className="text-[10px] opacity-90">lừa đảo tài chính</p> */}
               </div>
             </div>
           </div>
-
-
 
         </div>
       </div>
@@ -488,6 +795,236 @@ export function VideoSection() {
    SCENARIO VIDEO SECTION
    ═══════════════════════════════════════════ */
 
+// export function ScenarioVideoSection() {
+//   const sectionRef = useRef<HTMLElement>(null);
+//   const videoRef = useRef<HTMLVideoElement>(null);
+//   const stageRef = useRef<HTMLDivElement>(null);
+
+//   // Video States
+//   const [isPlaying, setIsPlaying] = useState(false);
+//   const [isMuted, setIsMuted] = useState(true);
+//   const [currentTime, setCurrentTime] = useState(0);
+//   const [duration, setDuration] = useState(0);
+
+//   useEffect(() => {
+//     const ctx = gsap.context(() => {
+//       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+//       tl.from('.scenario-wing-left', { x: -40, opacity: 0, duration: 0.7 })
+//         .from('.scenario-wing-right', { x: 40, opacity: 0, duration: 0.7 }, '-=0.5')
+//         .from('.scenario-core-player', { y: 30, opacity: 0, duration: 0.8 }, '-=0.4');
+//     }, sectionRef);
+
+//     return () => ctx.revert();
+//   }, []);
+
+//   const handleTimeUpdate = () => {
+//     if (videoRef.current) setCurrentTime(videoRef.current.currentTime);
+//   };
+
+//   const handleLoadedMetadata = () => {
+//     if (videoRef.current) setDuration(videoRef.current.duration);
+//   };
+
+//   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     if (videoRef.current) {
+//       const newTime = parseFloat(e.target.value);
+//       videoRef.current.currentTime = newTime;
+//       setCurrentTime(newTime);
+//     }
+//   };
+
+//   const togglePlay = () => {
+//     if (!videoRef.current) return;
+//     if (isPlaying) videoRef.current.pause();
+//     else videoRef.current.play().catch(() => { });
+//     setIsPlaying(!isPlaying);
+//   };
+
+//   const toggleMute = () => {
+//     if (!videoRef.current) return;
+//     videoRef.current.muted = !isMuted;
+//     setIsMuted(!isMuted);
+//   };
+
+//   const toggleFullscreen = () => {
+//     if (!stageRef.current) return;
+//     if (!document.fullscreenElement) {
+//       stageRef.current.requestFullscreen().catch(() => { });
+//     } else {
+//       document.exitFullscreen();
+//     }
+//   };
+
+//   const formatTime = (time: number) => {
+//     if (isNaN(time)) return '00:00';
+//     const mins = Math.floor(time / 60);
+//     const secs = Math.floor(time % 60);
+//     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+//   };
+
+//   return (
+//     <section ref={sectionRef} className="py-16 lg:py-24 bg-cream/30 overflow-hidden border-t border-border">
+//       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
+
+//         {/* 3-Column Split Dashboard Framework */}
+//         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+
+//           {/* LEFT WING: Scenario Context Details (3 Columns) */}
+//           <div className="scenario-wing-left lg:col-span-3 space-y-4 lg:text-right Order-2 lg:order-1">
+//             <div className="space-y-1">
+//               <span className="text-[10px] font-bold tracking-widest text-red-600 uppercase bg-red-50 px-2 py-0.5 rounded inline-block">
+//                 Tình huống thực tế
+//               </span>
+//               <h3 className="text-xl font-black text-ink uppercase tracking-tight leading-tight">
+//                 Kịch bản thao túng <br className="hidden lg:block" /> & Dụ dỗ mạng
+//               </h3>
+//             </div>
+
+//             <p className="text-xs text-ink-muted leading-relaxed">
+//               Video mô phỏng cách thức các đối tượng ẩn danh tiếp cận, tạo dựng niềm tin giả tạo và thao túng tâm lý trẻ vị thành niên qua các nền tảng tin nhắn mật.
+//             </p>
+
+//             <div className="hidden lg:flex flex-col items-end gap-2 pt-2 border-t border-border text-[11px] text-ink-light">
+//               <span className="flex items-center gap-1.5 font-bold text-red-600">
+//                 <AlertTriangle className="w-3.5 h-3.5" /> DẤU HIỆU CẢNH BÁO
+//               </span>
+//               <span>• Yêu cầu giữ bí mật cuộc trò chuyện</span>
+//               <span>• Tặng quà hoặc nạp thẻ game ẩn danh</span>
+//             </div>
+//           </div>
+
+//           {/* CENTER WING: The Cinematic Scenario Media Player (6 Columns) */}
+//           <div className="scenario-core-player lg:col-span-6 order-1 lg:order-2">
+//             <div
+//               ref={stageRef}
+//               className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl bg-black group border border-border"
+//             >
+//               <video
+//                 ref={videoRef}
+//                 src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/Scenario.webm"
+//                 className="w-full h-full object-cover transform-gpu will-change-transform"
+//                 // autoPlay
+//                 loop
+//                 muted
+//                 playsInline
+//                 onTimeUpdate={handleTimeUpdate}
+//                 onLoadedMetadata={handleLoadedMetadata}
+//               />
+
+//               {/* Dynamic Overlay Interface */}
+//               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 z-10">
+
+//                 <div className="flex justify-between items-start">
+//                   <span className="bg-red-600/90 backdrop-blur-sm text-white font-bold text-[9px] tracking-wider px-2 py-0.5 rounded uppercase flex items-center gap-1">
+//                     <ShieldAlert className="w-3 h-3" /> Cảnh giác cao độ
+//                   </span>
+//                 </div>
+
+//                 {/* Centered Play Control HUD */}
+//                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+//                   <button
+//                     onClick={togglePlay}
+//                     className="flex items-center justify-center w-12 h-12 rounded-full bg-red-600 text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-200"
+//                   >
+//                     {isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white translate-x-0.5" />}
+//                   </button>
+//                 </div>
+
+//                 {/* Dashboard Control Rack */}
+//                 <div className="w-full space-y-2 mt-auto">
+//                   <input
+//                     type="range"
+//                     min="0"
+//                     max={duration || 100}
+//                     value={currentTime}
+//                     onChange={handleSeek}
+//                     className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none transition-colors"
+//                     style={{
+//                       background: `linear-gradient(to right, #dc2626 0%, #dc2626 ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) 100%)`
+//                     }}
+//                   />
+
+//                   <div className="flex items-center justify-between text-white text-xs">
+//                     <div className="flex items-center gap-4">
+//                       <button onClick={togglePlay} className="hover:text-red-500 transition-colors">
+//                         {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white" />}
+//                       </button>
+
+//                       {/* Volume Slider Assembly */}
+//                       <div className="flex items-center gap-1.5 group/volume">
+//                         <button onClick={toggleMute} className="hover:text-red-500 transition-colors">
+//                           {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+//                         </button>
+//                         <input
+//                           type="range"
+//                           min="0"
+//                           max="1"
+//                           step="0.05"
+//                           value={isMuted ? 0 : videoRef.current?.volume ?? 1}
+//                           onChange={(e) => {
+//                             if (videoRef.current) {
+//                               const val = parseFloat(e.target.value);
+//                               videoRef.current.volume = val;
+//                               videoRef.current.muted = val === 0;
+//                               setIsMuted(val === 0);
+//                             }
+//                           }}
+//                           className="w-0 opacity-0 group-hover/volume:w-12 group-hover/volume:opacity-100 focus:w-12 focus:opacity-100 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-red-600 transition-all duration-300"
+//                         />
+//                       </div>
+
+//                       <div className="font-mono opacity-80 text-[11px]">
+//                         {formatTime(currentTime)} / {formatTime(duration)}
+//                       </div>
+//                     </div>
+
+//                     <button onClick={toggleFullscreen} className="hover:text-red-500 transition-colors">
+//                       <Maximize className="w-4 h-4" />
+//                     </button>
+//                   </div>
+//                 </div>
+
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* RIGHT WING: Dynamic Safety Guidelines (3 Columns) */}
+//           <div className="scenario-wing-right lg:col-span-3 space-y-4 order-3">
+//             <div className="space-y-1">
+//               <span className="text-[10px] font-bold tracking-widest text-emerald-600 uppercase bg-emerald-50 px-2 py-0.5 rounded inline-block">
+//                 Giải pháp bảo vệ
+//               </span>
+//               <h3 className="text-xl font-black text-ink uppercase tracking-tight leading-tight">
+//                 Xây dựng <br className="hidden lg:block" /> Nguyên tắc ứng xử
+//               </h3>
+//             </div>
+
+//             <p className="text-xs text-ink-muted leading-relaxed">
+//               Chủ động trang bị cho bản thân và con trẻ bộ quy tắc ứng xử: Xác thực danh tính người lạ, tuyệt đối không chia sẻ vị trí hoặc hình ảnh nhạy cảm.
+//             </p>
+
+//             <div className="hidden lg:flex flex-col items-start gap-2 pt-2 border-t border-border text-[11px] text-ink-light">
+//               <span className="flex items-center gap-1.5 font-bold text-emerald-600">
+//                 <Heart className="w-3.5 h-3.5" /> HÀNH ĐỘNG BẢO VỆ
+//               </span>
+//               <span>• Thiết lập chế độ riêng tư tối đa</span>
+//               <span>• Chia sẻ ngay với người thân khi nghi ngờ</span>
+//             </div>
+//           </div>
+
+//         </div>
+
+//         {/* Minimal Bottom Banner for Context */}
+//         <div className="mt-8 pt-4 border-t border-border/60 flex items-center gap-2 text-ink-muted text-[11px] justify-center">
+//           <Info className="w-3.5 h-3.5 text-amber" />
+//           <span>Chiến dịch giáo dục cộng đồng về Phòng chống Xâm hại & Bắt cóc Trẻ em trên Không gian mạng.</span>
+//         </div>
+
+//       </div>
+//     </section>
+//   );
+// }
 export function ScenarioVideoSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -499,6 +1036,9 @@ export function ScenarioVideoSection() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  // 🚀 ĐỒNG BỘ FIX 1: Thêm reactive state cho volume để quản lý render màu thanh trượt
+  const [volume, setVolume] = useState(1);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -509,6 +1049,14 @@ export function ScenarioVideoSection() {
     }, sectionRef);
 
     return () => ctx.revert();
+  }, []);
+
+  // Đồng bộ cấu hình âm thanh ban đầu cho thẻ video từ state
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+      videoRef.current.volume = volume;
+    }
   }, []);
 
   const handleTimeUpdate = () => {
@@ -527,20 +1075,35 @@ export function ScenarioVideoSection() {
     }
   };
 
-  const togglePlay = () => {
+  const togglePlay = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation(); // Chặn đổi slide lớp cha khi tương tác nút phát
+    }
     if (!videoRef.current) return;
     if (isPlaying) videoRef.current.pause();
     else videoRef.current.play().catch(() => { });
     setIsPlaying(!isPlaying);
   };
 
-  const toggleMute = () => {
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation(); // Chặn đổi slide lớp cha khi nhấn nút âm lượng
+    }
     if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
+    const nextMuteState = !isMuted;
+    videoRef.current.muted = nextMuteState;
+    setIsMuted(nextMuteState);
+
+    if (!nextMuteState && volume === 0) {
+      videoRef.current.volume = 0.5;
+      setVolume(0.5);
+    }
   };
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation(); // Chặn đổi slide lớp cha khi bật toàn màn hình
     if (!stageRef.current) return;
     if (!document.fullscreenElement) {
       stageRef.current.requestFullscreen().catch(() => { });
@@ -556,6 +1119,11 @@ export function ScenarioVideoSection() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const blockSlideTrigger = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation(); // Lớp lá chắn bảo vệ bao bọc toàn bộ khung trình phát video
+  };
+
   return (
     <section ref={sectionRef} className="py-16 lg:py-24 bg-cream/30 overflow-hidden border-t border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
@@ -564,7 +1132,7 @@ export function ScenarioVideoSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 
           {/* LEFT WING: Scenario Context Details (3 Columns) */}
-          <div className="scenario-wing-left lg:col-span-3 space-y-4 lg:text-right Order-2 lg:order-1">
+          <div className="scenario-wing-left lg:col-span-3 space-y-4 lg:text-right order-2 lg:order-1">
             <div className="space-y-1">
               <span className="text-[10px] font-bold tracking-widest text-red-600 uppercase bg-red-50 px-2 py-0.5 rounded inline-block">
                 Tình huống thực tế
@@ -592,14 +1160,16 @@ export function ScenarioVideoSection() {
             <div
               ref={stageRef}
               className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-2xl bg-black group border border-border"
+              onClick={blockSlideTrigger}
+              onMouseDown={blockSlideTrigger}
+              onMouseUp={blockSlideTrigger}
             >
               <video
                 ref={videoRef}
                 src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/Scenario.webm"
-                className="w-full h-full object-cover transform-gpu will-change-transform"
-                // autoPlay
+                className="w-full h-full object-cover transform-gpu will-change-transform pointer-events-none"
                 loop
-                muted
+                muted={isMuted}
                 playsInline
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
@@ -617,7 +1187,8 @@ export function ScenarioVideoSection() {
                 {/* Centered Play Control HUD */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   <button
-                    onClick={togglePlay}
+                    type="button"
+                    onClick={(e) => togglePlay(e)}
                     className="flex items-center justify-center w-12 h-12 rounded-full bg-red-600 text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-200"
                   >
                     {isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white translate-x-0.5" />}
@@ -626,44 +1197,64 @@ export function ScenarioVideoSection() {
 
                 {/* Dashboard Control Rack */}
                 <div className="w-full space-y-2 mt-auto">
-                  <input
-                    type="range"
-                    min="0"
-                    max={duration || 100}
-                    value={currentTime}
-                    onChange={handleSeek}
-                    className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none transition-colors"
-                    style={{
-                      background: `linear-gradient(to right, #dc2626 0%, #dc2626 ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) 100%)`
-                    }}
-                  />
+
+                  {/* Custom Progress Scrubber Bar */}
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="range"
+                      min="0"
+                      max={duration || 100}
+                      value={currentTime}
+                      // 🚀 ĐỒNG BỘ FIX 2: Cô lập hoàn toàn chuỗi sự kiện chuột trên thanh tiến độ nhạc
+                      onClick={(e) => e.stopPropagation()}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onMouseUp={(e) => e.stopPropagation()}
+                      onChange={handleSeek}
+                      className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none transition-colors"
+                      style={{
+                        background: `linear-gradient(to right, #dc2626 0%, #dc2626 ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) ${(currentTime / (duration || 1)) * 100}%, rgba(255,255,255,0.3) 100%)`
+                      }}
+                    />
+                  </div>
 
                   <div className="flex items-center justify-between text-white text-xs">
                     <div className="flex items-center gap-4">
-                      <button onClick={togglePlay} className="hover:text-red-500 transition-colors">
+                      <button type="button" onClick={(e) => togglePlay(e)} className="hover:text-red-500 transition-colors">
                         {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white" />}
                       </button>
 
                       {/* Volume Slider Assembly */}
                       <div className="flex items-center gap-1.5 group/volume">
-                        <button onClick={toggleMute} className="hover:text-red-500 transition-colors">
-                          {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                        <button type="button" onClick={(e) => toggleMute(e)} className="hover:text-red-500 transition-colors">
+                          {isMuted || volume === 0 ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                         </button>
                         <input
                           type="range"
                           min="0"
                           max="1"
                           step="0.05"
-                          value={isMuted ? 0 : videoRef.current?.volume ?? 1}
+                          value={isMuted ? 0 : volume} // Kết nối trực tiếp vào React state
+                          // 🚀 ĐỒNG BỘ FIX 3: Cô lập toàn bộ sự kiện sủi bọt chuột trên thanh kéo âm lượng
+                          onClick={(e) => e.stopPropagation()}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          onMouseUp={(e) => e.stopPropagation()}
                           onChange={(e) => {
+                            e.stopPropagation();
                             if (videoRef.current) {
                               const val = parseFloat(e.target.value);
                               videoRef.current.volume = val;
-                              videoRef.current.muted = val === 0;
-                              setIsMuted(val === 0);
+
+                              const shouldMute = val === 0;
+                              videoRef.current.muted = shouldMute;
+
+                              setVolume(val);
+                              setIsMuted(shouldMute);
                             }
                           }}
                           className="w-0 opacity-0 group-hover/volume:w-12 group-hover/volume:opacity-100 focus:w-12 focus:opacity-100 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-red-600 transition-all duration-300"
+                          style={{
+                            background: `linear-gradient(to right, #dc2626 0%, #dc2626 ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.3) ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.3) 100%)`
+                          }}
                         />
                       </div>
 
@@ -672,7 +1263,7 @@ export function ScenarioVideoSection() {
                       </div>
                     </div>
 
-                    <button onClick={toggleFullscreen} className="hover:text-red-500 transition-colors">
+                    <button type="button" onClick={(e) => toggleFullscreen(e)} className="hover:text-red-500 transition-colors">
                       <Maximize className="w-4 h-4" />
                     </button>
                   </div>
