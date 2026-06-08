@@ -319,6 +319,7 @@ export function VideoSection() {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-cream">
+      <FloatingParticles count={25} color="#C4882B" />
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 py-16 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
@@ -1057,11 +1058,263 @@ function FraudTypesSection() {
     </section>
   );
 }
-export function FraudScenariosAccordion() {
+// export function FraudScenariosAccordion() {
+//   const containerRef = useRef<HTMLElement>(null);
+
+//   useEffect(() => {
+//     // Hiệu ứng load-in ban đầu cho các thanh tiêu đề nhóm
+//     const ctx = gsap.context(() => {
+//       gsap.from('.group-trigger-bar', {
+//         y: 25,
+//         opacity: 0,
+//         duration: 0.6,
+//         stagger: 0.15,
+//         ease: 'power3.out'
+//       });
+//     }, containerRef);
+
+//     return () => ctx.revert();
+//   }, []);
+
+//   // Kích hoạt hiệu ứng GSAP cho các Card bên trong khi mở rộng Section
+//   const handleSectionOpen = (value: string | string[]) => {
+//     if (!value) return;
+
+//     setTimeout(() => {
+//       // Tìm lưới thẻ bên trong mục vừa được mở rộng
+//       const activeGrid = document.querySelector(`[data-state="open"] .scams-card-grid`);
+//       if (activeGrid) {
+//         gsap.fromTo(activeGrid.children,
+//           { y: 20, opacity: 0 },
+//           { y: 0, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'power2.out', overwrite: 'auto' }
+//         );
+//       }
+//     }, 10); // Micro-delay để Radix kịp render thuộc tính DOM
+//   };
+
+// const fraudGroups = [
+//   {
+//     id: "group-1",
+//     title: "NHÓM 1: TẤN CÔNG TRỰC TIẾP QUA NGHE - NHÌN",
+//     description: "Những hình thức thao túng trực diện bằng giọng nói, hình ảnh công nghệ cao để ép buộc nạn nhân chuyển tiền gấp hoặc dụ dỗ sập bẫy.",
+//     cards: [
+//       {
+//         title: "Cuộc gọi trực tiếp (Vishing)",
+//         icon: <Phone className="w-4 h-4 text-red-600" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Giả mạo Công an, Viện kiểm sát thông báo dính líu vụ án, hoặc đóng vai người thân vay tiền gấp." },
+//           { label: "Dấu hiệu", desc: "Tạo áp lực khẩn cấp, yêu cầu chuyển khoản ngay hoặc ép nhập cú pháp đổi eSIM chiếm số điện thoại." }
+//         ]
+//       },
+//       {
+//         title: "Bẫy Mạng xã hội",
+//         icon: <Share2 className="w-4 h-4 text-amber" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Người lạ kết bạn bằng ảnh đại diện bắt mắt tạo lòng tin, rủ vào hội nhóm đầu tư, làm nhiệm vụ kiếm tiền." },
+//           { label: "Dấu hiệu", desc: "Gắn mác 'đầu tư ít, lợi nhuận cao', quảng cáo tuyển dụng 'việc nhẹ lương cao' hoặc dịch vụ lấy lại tiền bị lừa." }
+//         ]
+//       },
+//       {
+//         title: "Cuộc gọi Deepfake AI",
+//         icon: <Video className="w-4 h-4 text-red-600" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Sử dụng trí tuệ nhân tạo (AI) sao chép gương mặt và giọng nói của người thân, bạn bè để gọi video." },
+//           { label: "Dấu hiệu", desc: "Cuộc gọi mờ, chập chờn, giả vờ sóng yếu để yêu cầu chuyển tiền cứu trợ khẩn cấp vào tài khoản lạ." }
+//         ]
+//       }
+//     ]
+//   },
+//   {
+//     id: "group-2",
+//     title: "NHÓM 2: KỸ THUẬT SỐ QUA VĂN BẢN VÀ ĐƯỜNG LINK",
+//     description: "Tấn công phi kỹ thuật thông qua tin nhắn và email giả mạo, dẫn dụ cài đặt mã độc để chiếm quyền điều khiển thiết bị từ xa.",
+//     cards: [
+//       {
+//         title: "Tin nhắn SMS & Email Phishing",
+//         icon: <Mail className="w-4 h-4 text-amber" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Gửi Email/SMS giả mạo ngân hàng hoặc tổ chức thông báo tài khoản bị khóa, đóng băng." },
+//           { label: "Dấu hiệu", desc: "Email sai chính tả, chứa link lạ hoặc link rút gọn yêu cầu nhấp vào để xác thực khẩn cấp." }
+//         ]
+//       },
+//       {
+//         title: "Website Giả mạo",
+//         icon: <Globe className="w-4 h-4 text-red-600" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Sao chép 99% giao diện đăng nhập hoặc thanh toán của ngân hàng, ví điện tử, cơ quan nhà nước." },
+//           { label: "Dấu hiệu", desc: "Tên miền (URL) có ký tự lạ, thừa thiếu chữ, không có chứng chỉ bảo mật SSL (biểu tượng ổ khóa)." }
+//         ]
+//       },
+//       {
+//         title: "Phần mềm & Tệp mã độc",
+//         icon: <FileCode className="w-4 h-4 text-red-600" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Lừa nạn nhân cài đặt app dịch vụ công giả mạo hoặc bấm vào file đính kèm chứa mã độc (.exe, .apk, .zip)." },
+//           { label: "Dấu hiệu", desc: "Yêu cầu cấp quyền Accessibility (Trợ năng) trên điện thoại để âm thầm chiếm quyền điều khiển tài khoản ngân hàng." }
+//         ]
+//       }
+//     ]
+//   },
+//   {
+//     id: "group-3",
+//     title: "NHÓM 3: ĐÁNH THẲNG VÀO ĐỜI SỐNG - BẪY TÂM LÝ",
+//     description: "Lợi dụng lòng tin, nhu cầu tài chính và thói quen mua sắm của nạn nhân để thực hiện các hành vi lừa đảo chiếm đoạt tài sản.",
+//     cards: [
+//       {
+//         title: "Thao túng Tình cảm & Đầu tư",
+//         icon: <Heart className="w-4 h-4 text-red-600" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Tạo mối quan hệ yêu đương ảo (Romance Scam) mượn tiền, hoặc lôi kéo vào nhóm Telegram bí mật đầu tư tài chính rác." },
+//           { label: "Dấu hiệu", desc: "Hứa hẹn lợi nhuận khủng 'không rủi ro', liên tục vẽ ra các lý do tai nạn, ốm đau để thúc ép gửi tiền." }
+//         ]
+//       },
+//       {
+//         title: "Bẫy tuyển dụng (Job Scam)",
+//         icon: <ShieldAlert className="w-4 h-4 text-amber" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Quảng cáo việc làm tại nhà, xử lý đơn hàng ảo cho các sàn thương mại điện tử lớn với thu nhập hấp dẫn." },
+//           { label: "Dấu hiệu", desc: "Bắt đóng tiền cọc quỹ, đóng phí đăng ký, mua tài liệu đào tạo hoặc ứng tiền mua hàng trước khi nhận việc." }
+//         ]
+//       },
+//       {
+//         title: "Bẫy mua sắm (E-commerce Scam)",
+//         icon: <ShoppingBag className="w-4 h-4 text-amber" />,
+//         details: [
+//           { label: "Kịch bản", desc: "Rao bán hàng hóa, vé máy bay, tour du lịch hoặc đồ công nghệ cao với giá rẻ bất thường trên mạng." },
+//           { label: "Dấu hiệu", desc: "Ép buộc người mua đặt cọc trước hoặc chuyển khoản 100% tiền hàng nhưng sau đó chặn liên lạc, không giao." }
+//         ]
+//       }
+//     ]
+//   }
+// ];
+
+//   return (
+//     <section ref={containerRef} className="py-16 bg-cream overflow-hidden border-t border-border">
+//       <div className="max-w-7xl mx-auto px-5 sm:px-8">
+
+//         {/* Tiêu đề chính của toàn bộ Section */}
+//         <div className="text-center space-y-2 mb-12">
+//           <span className="text-[10px] font-bold tracking-widest text-amber uppercase bg-amber/10 px-2.5 py-1 rounded-md inline-block">
+//             Cẩm nang an toàn số
+//           </span>
+//           <h2 className="text-2xl sm:text-3xl font-black text-ink uppercase tracking-tight">
+//             Danh Mục 10 Hình Thức Lừa Đảo Trực Tuyến
+//           </h2>
+//           <p className="text-xs text-ink-muted max-w-md mx-auto">
+//             Chọn một nhóm tấn công dưới đây để phân tích chi tiết kịch bản và dấu hiệu nhận biết của từng loại hình cụ thể.
+//           </p>
+//         </div>
+
+//         {/* CẤU TRÚC RADIX ACCORDION ROOT */}
+//         <Accordion.Root
+//           type="multiple"
+//           // collapsible
+//           onValueChange={handleSectionOpen}
+//           className="space-y-4"
+//         >
+//           {fraudGroups.map((group) => (
+//             <Accordion.Item
+//               key={group.id}
+//               value={group.id}
+//               className="border border-border rounded-2xl bg-white shadow-sm overflow-hidden"
+//             >
+
+//               {/* THANH TIÊU ĐỀ TITLE BAR CỦA MỖI NHÓM */}
+//               <Accordion.Header className="flex">
+//                 <Accordion.Trigger className="group-trigger-bar flex w-full items-center justify-between p-4 sm:p-5 bg-white hover:bg-cream/10 text-left transition-colors group outline-none focus:outline-none">
+//                   <div className="space-y-1 pr-4">
+//                     <h3 className="text-sm sm:text-base font-black text-ink tracking-wide uppercase">
+//                       {group.title}
+//                     </h3>
+//                     <p className="text-[11px] sm:text-xs text-ink-muted font-normal max-w-2xl leading-normal">
+//                       {group.description}
+//                     </p>
+//                   </div>
+
+//                   {/* Mũi tên Chevron xoay động */}
+//                   <ChevronDown className="w-5 h-5 text-ink-muted transition-transform duration-300 group-data-[state=open]:rotate-180 flex-shrink-0" />
+//                 </Accordion.Trigger>
+//               </Accordion.Header>
+
+//               {/* KHUNG NỘI DUNG SẼ TRƯỢT XUỐNG KHI CLICK */}
+//               <Accordion.Content className="overflow-hidden data-[state=closed]:animate-[slideUp_250ms_ease-in] data-[state=open]:animate-[slideDown_300ms_ease-out] border-t border-border/60 bg-cream/5">
+//                 <div className="p-4 sm:p-6">
+
+//                   {/* LƯỚI CHỨA ĐÚNG 3 CARD CHO MỖI NHÓM */}
+//                   <div className="scams-card-grid grid grid-cols-1 md:grid-cols-3 gap-4">
+//                     {group.cards.map((card, idx) => (
+//                       <div
+//                         key={idx}
+//                         className="bg-white rounded-xl p-4 shadow-sm border border-border flex flex-col justify-between hover:shadow-md hover:border-amber/30 transition-all cursor-default"
+//                       >
+//                         <div className="space-y-3.5">
+//                           {/* Tiêu đề của Card */}
+//                           <div className="flex items-center gap-2 border-b border-border/60 pb-2">
+//                             <span className="p-1.5 rounded-lg bg-cream/60 flex-shrink-0">
+//                               {card.icon}
+//                             </span>
+//                             <h4 className="text-xs font-black text-ink tracking-wide uppercase leading-tight">
+//                               {card.title}
+//                             </h4>
+//                           </div>
+
+//                           {/* Chi tiết kịch bản và dấu hiệu */}
+//                           <div className="space-y-3">
+//                             {card.details.map((detail, dIdx) => (
+//                               <div key={dIdx} className="space-y-1">
+//                                 <span className="text-[10px] font-bold text-ink-light uppercase tracking-wider block">
+//                                   {detail.label}
+//                                 </span>
+//                                 <p className="text-[11px] text-ink-muted leading-relaxed">
+//                                   {detail.desc}
+//                                 </p>
+//                               </div>
+//                             ))}
+//                           </div>
+//                         </div>
+
+//                       </div>
+//                     ))}
+//                   </div>
+
+//                 </div>
+//               </Accordion.Content>
+
+//             </Accordion.Item>
+//           ))}
+//         </Accordion.Root>
+
+//       </div>
+
+//       {/* CSS Animation tích hợp sẵn cho quá trình đóng/mở mượt mà của Radix Accordion */}
+//       <style>{`
+//         @keyframes slideDown {
+//           from { height: 0; }
+//           to { height: var(--radix-accordion-content-height); }
+//         }
+//         @keyframes slideUp {
+//           from { height: var(--radix-accordion-content-height); }
+//           to { height: 0; }
+//         }
+//       `}</style>
+//     </section>
+//   );
+// }
+interface AccordionProps {
+  activeAction?: string;
+}
+
+export function FraudScenariosAccordion({ activeAction }: AccordionProps) {
   const containerRef = useRef<HTMLElement>(null);
 
+  // Xác định xem Group nào sẽ được mở dựa trên bước hiện tại của Timeline
+  let openValue = "";
+  if (activeAction === 'open-group-1') openValue = "group-1";
+  if (activeAction === 'open-group-2') openValue = "group-2";
+  if (activeAction === 'open-group-3') openValue = "group-3";
+
+  // Hiệu ứng load-in ban đầu khi vừa cuộn tới Section này
   useEffect(() => {
-    // Hiệu ứng load-in ban đầu cho các thanh tiêu đề nhóm
     const ctx = gsap.context(() => {
       gsap.from('.group-trigger-bar', {
         y: 25,
@@ -1071,25 +1324,38 @@ export function FraudScenariosAccordion() {
         ease: 'power3.out'
       });
     }, containerRef);
-
     return () => ctx.revert();
   }, []);
 
-  // Kích hoạt hiệu ứng GSAP cho các Card bên trong khi mở rộng Section
-  const handleSectionOpen = (value: string | string[]) => {
-    if (!value) return;
+  // Lắng nghe thay đổi bước từ Timeline để kích hoạt animation cho các Card con
+  useEffect(() => {
+    if (!openValue || !containerRef.current) return;
 
-    setTimeout(() => {
-      // Tìm lưới thẻ bên trong mục vừa được mở rộng
-      const activeGrid = document.querySelector(`[data-state="open"] .scams-card-grid`);
-      if (activeGrid) {
-        gsap.fromTo(activeGrid.children,
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'power2.out', overwrite: 'auto' }
-        );
+    // Kích hoạt chậm lại một chút để chờ Radix mở hoàn toàn khung Content ra
+    const timer = setTimeout(() => {
+      const activeItem = containerRef.current?.querySelector(`[data-value="${openValue}"]`);
+      if (activeItem) {
+        const cards = activeItem.querySelectorAll('.scams-card-grid > div');
+        if (cards.length > 0) {
+          gsap.killTweensOf(cards);
+          gsap.fromTo(cards,
+            { y: 25, opacity: 0, scale: 0.97 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.5,
+              stagger: 0.1, // Hiện từng card một (stagger) cách nhau 0.1 giây cực đẹp
+              ease: 'power2.out',
+              overwrite: 'auto'
+            }
+          );
+        }
       }
-    }, 10); // Micro-delay để Radix kịp render thuộc tính DOM
-  };
+    }, 120); // Đảm bảo Radix đổi trạng thái xong xuôi
+
+    return () => clearTimeout(timer);
+  }, [openValue]);
 
   const fraudGroups = [
     {
@@ -1188,10 +1454,10 @@ export function FraudScenariosAccordion() {
   ];
 
   return (
-    <section ref={containerRef} className="py-16 bg-cream overflow-hidden border-t border-border">
+    // Thêm ID cho Section để khớp lệnh cuộn của Timeline lớp cha
+    <section ref={containerRef} className="py-16 bg-cream overflow-hidden border-t border-border min-h-[120vh]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
 
-        {/* Tiêu đề chính của toàn bộ Section */}
         <div className="text-center space-y-2 mb-12">
           <span className="text-[10px] font-bold tracking-widest text-amber uppercase bg-amber/10 px-2.5 py-1 rounded-md inline-block">
             Cẩm nang an toàn số
@@ -1199,28 +1465,25 @@ export function FraudScenariosAccordion() {
           <h2 className="text-2xl sm:text-3xl font-black text-ink uppercase tracking-tight">
             Danh Mục 10 Hình Thức Lừa Đảo Trực Tuyến
           </h2>
-          <p className="text-xs text-ink-muted max-w-md mx-auto">
-            Chọn một nhóm tấn công dưới đây để phân tích chi tiết kịch bản và dấu hiệu nhận biết của từng loại hình cụ thể.
-          </p>
         </div>
 
-        {/* CẤU TRÚC RADIX ACCORDION ROOT */}
+        {/* Chuyển value sang chế độ kiểm soát thủ công thông qua biến openValue từ Timeline */}
         <Accordion.Root
-          type="multiple"
-          // collapsible
-          onValueChange={handleSectionOpen}
+          type="single" // Chuyển thành "single" để tự động đóng mục cũ khi mục mới mở, giao diện gọn gàng hơn
+          collapsible
+          value={openValue}
           className="space-y-4"
         >
           {fraudGroups.map((group) => (
             <Accordion.Item
               key={group.id}
               value={group.id}
+              id={`accordion-${group.id}`}
               className="border border-border rounded-2xl bg-white shadow-sm overflow-hidden"
             >
-
-              {/* THANH TIÊU ĐỀ TITLE BAR CỦA MỖI NHÓM */}
               <Accordion.Header className="flex">
-                <Accordion.Trigger className="group-trigger-bar flex w-full items-center justify-between p-4 sm:p-5 bg-white hover:bg-cream/10 text-left transition-colors group outline-none focus:outline-none">
+                {/* Vô hiệu hóa pointer-events để tránh việc click chuột trực tiếp phá vỡ luồng Timeline */}
+                <Accordion.Trigger className="group-trigger-bar pointer-events-none flex w-full items-center justify-between p-4 sm:p-5 bg-white text-left outline-none">
                   <div className="space-y-1 pr-4">
                     <h3 className="text-sm sm:text-base font-black text-ink tracking-wide uppercase">
                       {group.title}
@@ -1229,72 +1492,45 @@ export function FraudScenariosAccordion() {
                       {group.description}
                     </p>
                   </div>
-
-                  {/* Mũi tên Chevron xoay động */}
                   <ChevronDown className="w-5 h-5 text-ink-muted transition-transform duration-300 group-data-[state=open]:rotate-180 flex-shrink-0" />
                 </Accordion.Trigger>
               </Accordion.Header>
 
-              {/* KHUNG NỘI DUNG SẼ TRƯỢT XUỐNG KHI CLICK */}
               <Accordion.Content className="overflow-hidden data-[state=closed]:animate-[slideUp_250ms_ease-in] data-[state=open]:animate-[slideDown_300ms_ease-out] border-t border-border/60 bg-cream/5">
                 <div className="p-4 sm:p-6">
-
-                  {/* LƯỚI CHỨA ĐÚNG 3 CARD CHO MỖI NHÓM */}
                   <div className="scams-card-grid grid grid-cols-1 md:grid-cols-3 gap-4">
                     {group.cards.map((card, idx) => (
                       <div
                         key={idx}
-                        className="bg-white rounded-xl p-4 shadow-sm border border-border flex flex-col justify-between hover:shadow-md hover:border-amber/30 transition-all cursor-default"
+                        className="bg-white rounded-xl p-4 shadow-sm border border-border flex flex-col justify-between"
                       >
                         <div className="space-y-3.5">
-                          {/* Tiêu đề của Card */}
                           <div className="flex items-center gap-2 border-b border-border/60 pb-2">
-                            <span className="p-1.5 rounded-lg bg-cream/60 flex-shrink-0">
-                              {card.icon}
-                            </span>
-                            <h4 className="text-xs font-black text-ink tracking-wide uppercase leading-tight">
-                              {card.title}
-                            </h4>
+                            <span className="p-1.5 rounded-lg bg-cream/60 flex-shrink-0">{card.icon}</span>
+                            <h4 className="text-xs font-black text-ink tracking-wide uppercase leading-tight">{card.title}</h4>
                           </div>
-
-                          {/* Chi tiết kịch bản và dấu hiệu */}
                           <div className="space-y-3">
                             {card.details.map((detail, dIdx) => (
                               <div key={dIdx} className="space-y-1">
-                                <span className="text-[10px] font-bold text-ink-light uppercase tracking-wider block">
-                                  {detail.label}
-                                </span>
-                                <p className="text-[11px] text-ink-muted leading-relaxed">
-                                  {detail.desc}
-                                </p>
+                                <span className="text-[10px] font-bold text-ink-light uppercase tracking-wider block">{detail.label}</span>
+                                <p className="text-[11px] text-ink-muted leading-relaxed">{detail.desc}</p>
                               </div>
                             ))}
                           </div>
                         </div>
-
                       </div>
                     ))}
                   </div>
-
                 </div>
               </Accordion.Content>
-
             </Accordion.Item>
           ))}
         </Accordion.Root>
-
       </div>
 
-      {/* CSS Animation tích hợp sẵn cho quá trình đóng/mở mượt mà của Radix Accordion */}
       <style>{`
-        @keyframes slideDown {
-          from { height: 0; }
-          to { height: var(--radix-accordion-content-height); }
-        }
-        @keyframes slideUp {
-          from { height: var(--radix-accordion-content-height); }
-          to { height: 0; }
-        }
+        @keyframes slideDown { from { height: 0; } to { height: var(--radix-accordion-content-height); } }
+        @keyframes slideUp { from { height: var(--radix-accordion-content-height); } to { height: 0; } }
       `}</style>
     </section>
   );
@@ -1590,8 +1826,8 @@ function RebuttalSection() {
   const ref = useRef<HTMLElement>(null);
   const points = [
     { num: '01', subtitle: 'GIẢM THIỂU BẢN CHẤT ĐA DẠNG', title: 'Tội phạm không chỉ vì tiền', content: 'Lừa đảo trực tuyến không chỉ nhắm đến tiền bạc. Tội phạm còn nhắm đến: đánh cắp thông tin cá nhân, cài mã độc, bôi nhọ danh dự, tống tiền, hack tài khoản để lừa tiếp người thân. Theo Sổ Tay Cục ATTT, "đánh cắp thông tin cá nhân" là mục đích hàng đầu.', items: ['Thông tin cá nhân (CCCD, số điện thoại)', 'Tài khoản mạng xã hội (Facebook, Zalo)', 'Danh dự và hình ảnh cá nhân'] },
-    { num: '02', subtitle: 'COI THƯỜNG GIÁ TRỊ TÀI SẢN VÔ HÌNH', title: 'Giá trị vượt xa con số trong tài khoản', content: 'Ngườii nghèo vẫn có danh tính, tài khoản mạng xã hội, thông tin cá nhân, tình cảm, niềm tin - tất cả đều là hàng hóa có giá trị. 66,24% người dùng VN xác nhận thông tin của họ từng bị sử dụng trái phép.', items: ['Danh tính số có thể bán trên chợ đen', 'Lịch sử duyệt web bị khai thác', 'Mạng lưới quan hệ bị lợi dụng để lừa tiếp'] },
-    { num: '03', subtitle: 'PHÂN BIỆT ĐỐI XỬ', title: 'Ngườii nghèo là mục tiêu hấp dẫn', content: 'Tội phạm nhắm vào sự nhẹ dạ, cần kíp, thiếu thông tin - không chỉ tài sản hiện có. Ngườii nghèo thường chủ quan nghĩ "mình không có gì để mất", dẫn đến ít đề phòng và dễ bị tấn công hơn.', items: ['Chi phí săn mồi thấp (1 cuộc gọi/tin nhắn)', 'Dễ kiểm soát do ít tiếp cận pháp lý', 'Tự tin sai lầm: "không có tiền nên không sợ bị lừa"'] },
+    { num: '02', subtitle: 'COI THƯỜNG GIÁ TRỊ TÀI SẢN VÔ HÌNH', title: 'Giá trị vượt xa con số trong tài khoản', content: 'Người nghèo vẫn có danh tính, tài khoản mạng xã hội, thông tin cá nhân, tình cảm, niềm tin - tất cả đều là hàng hóa có giá trị. 66,24% người dùng VN xác nhận thông tin của họ từng bị sử dụng trái phép.', items: ['Danh tính số có thể bán trên chợ đen', 'Lịch sử duyệt web bị khai thác', 'Mạng lưới quan hệ bị lợi dụng để lừa tiếp'] },
+    { num: '03', subtitle: 'PHÂN BIỆT ĐỐI XỬ', title: 'Người nghèo là mục tiêu hấp dẫn', content: 'Tội phạm nhắm vào sự nhẹ dạ, cần kíp, thiếu thông tin - không chỉ tài sản hiện có. Ngườii nghèo thường chủ quan nghĩ "mình không có gì để mất", dẫn đến ít đề phòng và dễ bị tấn công hơn.', items: ['Chi phí săn mồi thấp (1 cuộc gọi/tin nhắn)', 'Dễ kiểm soát do ít tiếp cận pháp lý', 'Tự tin sai lầm: "không có tiền nên không sợ bị lừa"'] },
   ];
 
   useEffect(() => {
@@ -1602,7 +1838,7 @@ function RebuttalSection() {
   }, []);
 
   return (
-    <section ref={ref} className="py-16 sm:py-20 bg-cream">
+    <section ref={ref} className="py-16 sm:py-20 bg-cream border-border border-t">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
         <div className="text-center mb-10">
           <span className="inline-block bg-danger/10 text-danger text-xs font-bold uppercase px-4 py-2 rounded-full mb-3">Phản biện</span>
@@ -2118,7 +2354,7 @@ function TeamSection() {
 
       {/* Team Dialog Popup */}
       <Dialog open={openTeam} onOpenChange={setOpenTeam}>
-        <DialogContent style={{ width: '80vw', maxWidth: 'none' }} className="w-[80vw] max-h-[90vh] bg-gradient-to-br from-ink via-[#2a2420] to-ink border-white/20 text-white">
+        <DialogContent style={{ width: '80vw', maxWidth: 'none' }} className="w-[80vw] max-h-[90vh] bg-gradient-to-br from-ink via-[#2a2420] to-ink border-white/20 text-white overflow-x-hidden">
           <DialogHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -2340,6 +2576,137 @@ export default function Home() {
   const [showNav, setShowNav] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
+  // 1. Extend the timeline array to specify alignment types
+  // scrollToSection(['music-video', 'introduction', 'fraud-types', 'spotting', 'resolving', 'preventative', 'supports', 'scenario', 'rebuttal', 'poster', 'team'][i])}
+  const timeline: any[] = [
+    { slideId: 'music-video', revealLevel: 0, align: 'start' }, // Smaller slide -> Center view
+
+    { slideId: 'introduction', revealLevel: 0, align: 'center' }, // Top of container hits top of screen
+    { slideId: 'introduction02', revealLevel: 0, align: 'center' }, // Bottom of container hits bottom of screen
+
+    { slideId: 'fraud-types', revealLevel: 0, align: 'start' },
+
+    { slideId: 'accordion-group-1', action: 'open-group-1', align: 'center' },
+    { slideId: 'accordion-group-2', action: 'open-group-2', align: 'center' },
+    { slideId: 'accordion-group-3', action: 'open-group-3', align: 'center' },
+
+    { slideId: 'spotting', revealLevel: 0, align: 'start' },
+    { slideId: 'spotting', revealLevel: 1, align: 'center' },
+    { slideId: 'spotting', revealLevel: 2, align: 'end' },
+
+    { slideId: 'spotting02', revealLevel: 0, align: 'start' },
+    { slideId: 'spotting02', revealLevel: 1, align: 'center' },
+    { slideId: 'spotting02', revealLevel: 2, align: 'end' },
+
+    { slideId: 'resolving', revealLevel: 0, align: 'start' },
+    { slideId: 'resolving', revealLevel: 1, align: 'end' },
+    { slideId: 'preventative', revealLevel: 0, align: 'start' },
+    { slideId: 'preventative', revealLevel: 1, align: 'end' },
+    { slideId: 'supports', revealLevel: 0, align: 'start' },
+    { slideId: 'supports', revealLevel: 1, align: 'end' },
+    { slideId: 'scenario', revealLevel: 0, align: 'center' },
+    { slideId: 'rebuttal', revealLevel: 0, align: 'start' },
+    { slideId: 'poster', revealLevel: 0, align: 'center' },
+    { slideId: 'team', revealLevel: 0, align: 'start' },
+
+  ];
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const activeTimelineItem = timeline[currentStep];
+
+  // Guard flag to prevent scroll listeners from fighting click triggers during transit
+  const isNavigatingRef = useRef(false);
+
+  // 1. Track physical section entry via Intersection Observer
+  useEffect(() => {
+    const observerOptions = {
+      root: null, // monitors the viewport window
+      threshold: 0.4, // triggers when 40% of the target section is visible
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      // If a programmatic jump click is running, ignore natural scroll updates temporarily
+      if (isNavigatingRef.current) return;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const visibleId = entry.target.id;
+
+          // Find the first matching item in our array sequence matching this element ID
+          const matchingIndex = timeline.findIndex(item => item.slideId === visibleId);
+          if (matchingIndex !== -1) {
+            setCurrentStep(matchingIndex);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Connect observer targets
+    ['intro', 'long-content', 'video-slide', 'conclusion'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavigation = (e: React.MouseEvent) => {
+    if (e.target instanceof HTMLElement && (e.target.tagName === 'BUTTON' || e.target.tagName === 'VIDEO' || e.target.closest('button'))) {
+      return;
+    }
+
+    if (e.button === 0) { // Left Click -> Forward
+      if (currentStep < timeline.length - 1) {
+        goToStep(currentStep + 1);
+      } else {
+        goToStep(0);
+      }
+    } else if (e.button === 2) { // Right Click -> Backward
+      e.preventDefault();
+      if (currentStep > 0) {
+        goToStep(currentStep - 1);
+      } else {
+        // 🚀 NEW REVERSE BEHAVIOR: 
+        // If we are at Step 0 (the top) and right-click, wrap around to the very last step (the bottom)!
+        goToStep(timeline.length - 1);
+      }
+    }
+  };
+
+  const goToStep = (stepIndex: number) => {
+    isNavigatingRef.current = true;
+    setCurrentStep(stepIndex);
+
+    const targetTimelineItem = timeline[stepIndex];
+
+    setTimeout(() => {
+      const targetElement = document.getElementById(targetTimelineItem.slideId);
+      if (targetElement) {
+
+        // 🚀 FIX: If it's an accordion item, give Radix a moment to expand 
+        // its height before calculating the screen center coordinate layout!
+        const isAccordion = targetTimelineItem.slideId.includes('accordion');
+
+        setTimeout(() => {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: targetTimelineItem.align,
+          });
+
+          // Restore manual scrolling tracking after smooth navigation ends
+          setTimeout(() => {
+            isNavigatingRef.current = false;
+          }, 1500);
+        }, isAccordion ? 180 : 0); // 180ms delay gives the slideDown layout a head start
+
+      } else {
+        isNavigatingRef.current = false;
+      }
+    }, 0);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     ScrollTrigger.refresh();
@@ -2358,86 +2725,96 @@ export default function Home() {
   };
 
   return (
-    <main className="bg-cream">
-      {/* Floating Navigation */}
-      {showNav && (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-ink/95 backdrop-blur-sm text-white py-3 px-4 sm:px-8 shadow-lg transition-all">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <span className="font-bold text-sm uppercase hidden sm:block">Phòng Chống Lừa Đảo</span>
-            <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto text-xs">
-              {['Music Video', 'Tổng Quan', 'Hình thức', 'Nhận biết', 'Xử Lý', 'Phòng Tránh - Nguyên tắc', 'Truyền thông', 'Tình Huống', 'Poster', 'Thành viên'].map((label, i) => (
-                <button key={i} onClick={() => scrollToSection(['music-video', 'introduction', 'fraud-types', 'spotting', 'resolving', 'preventative', 'supports', 'scenario', 'poster', 'team'][i])} className="hover:text-amber transition-colors whitespace-nowrap">
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </nav>
-      )}
+    <div
+      onMouseDown={handleNavigation}
+      onContextMenu={(e) => e.preventDefault()}
+      // 🚀 Changed from overflow-hidden to h-screen overflow-y-auto to restore normal scrolling!
+      className="w-full min-h-screen bg-slate-950 scroll-smooth"
+    >
 
-      <div id="music-video"><VideoSection /></div>
-      <div id="introduction"><HeroSection /></div>
-      <StatsSection />
-      <div id="fraud-types"><FraudScenariosAccordion /></div>
-      {/* <div id="psychology"><PsychologySection /></div> */}
-      <div id="spotting"><ChannelsSection /></div>
-      <PsychologicalManipulationSection />
-      {/* <RebuttalSection /> */}
-      {/* <VictimsSection /> */}
-      {/* <PoorPeopleSection /> */}
-      {/* <div id="resolving">
+      <main className="bg-cream">
+        {/* Floating Navigation */}
+        {showNav && (
+          <nav className="fixed top-0 left-0 right-0 z-50 bg-ink/95 backdrop-blur-sm text-white py-3 px-4 sm:px-8 shadow-lg transition-all">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+              <span className="font-bold text-sm uppercase hidden sm:block">Phòng Chống Lừa Đảo</span>
+              <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto text-xs">
+                {['Music Video', 'Tổng Quan', 'Hình thức', 'Nhận biết', 'Xử Lý', 'Phòng Tránh - Nguyên tắc', 'Truyền thông', 'Tình Huống', 'Chủ quan', 'Poster', 'Thành viên'].map((label, i) => (
+                  <button key={i} onClick={() => scrollToSection(['music-video', 'introduction', 'fraud-types', 'spotting', 'resolving', 'preventative', 'supports', 'scenario', 'rebuttal', 'poster', 'team'][i])} className="hover:text-amber transition-colors whitespace-nowrap">
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </nav>
+        )}
+
+        <div id="music-video"><VideoSection /></div>
+        <div id="introduction"><HeroSection /></div>
+        <div id="introduction02"><StatsSection /></div>
+        <div id="fraud-types"><FraudScenariosAccordion activeAction={activeTimelineItem?.action} /></div>
+        {/* <div id="psychology"><PsychologySection /></div> */}
+        <div id="spotting"><ChannelsSection /></div>
+        <div id="spotting02"><PsychologicalManipulationSection /></div>
+        {/* <VictimsSection /> */}
+        {/* <PoorPeopleSection /> */}
+        {/* <div id="resolving">
       <ActionSection />
       </div> */}
-      <div id="resolving"><SkillsSection /></div>
-      <div id="preventative"><GoldenRulesSection /></div>
-      <div id="supports"><SupportEcosystemSection /></div>
-      {/* <MessagesSection /> */}
-      <div id="scenario"><ScenarioVideoSection /></div>
-      <div id="poster"><PosterSection /></div>
-      <TeamSection />
+        <div id="resolving"><SkillsSection /></div>
+        <div id="preventative"><GoldenRulesSection /></div>
+        <div id="supports"><SupportEcosystemSection /></div>
+        {/* <MessagesSection /> */}
+        <div id="scenario"><ScenarioVideoSection /></div>
+        <div id="rebuttal">
+          <RebuttalSection />
+        </div>
+        <div id="poster"><PosterSection /></div>
+        <TeamSection />
 
-      {/* Scroll to top */}
-      {showScrollTop && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-amber text-white rounded-full shadow-lg flex items-center justify-center hover:bg-amber-dark transition-colors"
-        >
-          <ArrowUp className="w-5 h-5" />
-        </button>
-      )}
+        {/* Scroll to top */}
+        {showScrollTop && (
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-amber text-white rounded-full shadow-lg flex items-center justify-center hover:bg-amber-dark transition-colors"
+          >
+            <ArrowUp className="w-5 h-5" />
+          </button>
+        )}
 
-      {/* Footer */}
-      <footer className="bg-ink text-white py-10 sm:py-12">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h4 className="font-bold text-base sm:text-lg mb-3">NHẬN DIỆN & PHÒNG CHỐNG LỪA ĐẢO</h4>
-              <p className="text-white/50 text-sm leading-relaxed">
-                Website giáo dục cộng đồng về nhận diện và phòng chống lừa đảo trực tuyến, dựa trên Sổ Tay Kỹ Năng của Cục An toàn thông tin.
+        {/* Footer */}
+        <footer className="bg-ink text-white py-10 sm:py-12">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+              <div>
+                <h4 className="font-bold text-base sm:text-lg mb-3">NHẬN DIỆN & PHÒNG CHỐNG LỪA ĐẢO</h4>
+                <p className="text-white/50 text-sm leading-relaxed">
+                  Website giáo dục cộng đồng về nhận diện và phòng chống lừa đảo trực tuyến, dựa trên Sổ Tay Kỹ Năng của Cục An toàn thông tin.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold text-sm uppercase mb-3">Liên kết hữu ích</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li><a href="https://canhbao.khonggianmang.vn" target="_blank" rel="noopener noreferrer" className="hover:text-amber transition-colors">canhbao.khonggianmang.vn</a></li>
+                  <li><a href="https://www.antoanthongtin.vn" target="_blank" rel="noopener noreferrer" className="hover:text-amber transition-colors">antoanthongtin.vn</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-bold text-sm uppercase mb-3">Số điện thoại khẩn cấp</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li className="flex items-center gap-2"><Phone className="w-4 h-4 text-amber" /> Công an: 113</li>
+                  <li className="flex items-center gap-2"><Phone className="w-4 h-4 text-amber" /> Cục An ninh mạng: 069.219.4053</li>
+                </ul>
+              </div>
+            </div>
+            <div className="border-t border-white/10 pt-6 text-center">
+              <p className="text-white/40 text-xs">
+                Nguồn: Sổ Tay Kỹ Năng Nhận diện & Phòng chống Lừa đảo Trực tuyến | Cục An toàn thông tin - Bộ TT&TT
               </p>
             </div>
-            <div>
-              <h4 className="font-bold text-sm uppercase mb-3">Liên kết hữu ích</h4>
-              <ul className="space-y-2 text-sm text-white/50">
-                <li><a href="https://canhbao.khonggianmang.vn" target="_blank" rel="noopener noreferrer" className="hover:text-amber transition-colors">canhbao.khonggianmang.vn</a></li>
-                <li><a href="https://www.antoanthongtin.vn" target="_blank" rel="noopener noreferrer" className="hover:text-amber transition-colors">antoanthongtin.vn</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-sm uppercase mb-3">Số điện thoại khẩn cấp</h4>
-              <ul className="space-y-2 text-sm text-white/50">
-                <li className="flex items-center gap-2"><Phone className="w-4 h-4 text-amber" /> Công an: 113</li>
-                <li className="flex items-center gap-2"><Phone className="w-4 h-4 text-amber" /> Cục An ninh mạng: 069.219.4053</li>
-              </ul>
-            </div>
           </div>
-          <div className="border-t border-white/10 pt-6 text-center">
-            <p className="text-white/40 text-xs">
-              Nguồn: Sổ Tay Kỹ Năng Nhận diện & Phòng chống Lừa đảo Trực tuyến | Cục An toàn thông tin - Bộ TT&TT
-            </p>
-          </div>
-        </div>
-      </footer>
-    </main>
+        </footer>
+      </main>
+    </div>
   );
 }
