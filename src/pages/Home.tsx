@@ -628,7 +628,7 @@ export function VideoSection() {
             </div>
 
             <p className="hero-subtitle text-base sm:text-lg lg:text-xl text-ink-light font-medium">
-              Xem video hướng dẫn xây dựng lá chắn bảo vệ danh tính trực tuyến
+              Xem video nhạc xây dựng lá chắn bảo vệ danh tính trực tuyến
             </p>
 
             <p className="hero-desc text-sm text-ink-muted max-w-lg">
@@ -2025,6 +2025,14 @@ export function FraudScenariosAccordion({ activeAction }: AccordionProps) {
           ]
         },
         {
+          title: "Bẫy mua sắm (E-commerce Scam)",
+          icon: <ShoppingBag className="w-4 h-4 text-amber" />,
+          details: [
+            { label: "Kịch bản", desc: "Rao bán hàng hóa, vé máy bay, tour du lịch hoặc đồ công nghệ cao với giá rẻ bất thường trên mạng." },
+            { label: "Dấu hiệu", desc: "Ép buộc người mua đặt cọc trước hoặc chuyển khoản 100% tiền hàng nhưng sau đó chặn liên lạc, không giao." }
+          ]
+        },
+        {
           title: "Bẫy tuyển dụng (Job Scam)",
           icon: <ShieldAlert className="w-4 h-4 text-amber" />,
           details: [
@@ -2032,14 +2040,6 @@ export function FraudScenariosAccordion({ activeAction }: AccordionProps) {
             { label: "Dấu hiệu", desc: "Bắt đóng tiền cọc quỹ, đóng phí đăng ký, mua tài liệu đào tạo hoặc ứng tiền mua hàng trước khi nhận việc." }
           ]
         },
-        {
-          title: "Bẫy mua sắm (E-commerce Scam)",
-          icon: <ShoppingBag className="w-4 h-4 text-amber" />,
-          details: [
-            { label: "Kịch bản", desc: "Rao bán hàng hóa, vé máy bay, tour du lịch hoặc đồ công nghệ cao với giá rẻ bất thường trên mạng." },
-            { label: "Dấu hiệu", desc: "Ép buộc người mua đặt cọc trước hoặc chuyển khoản 100% tiền hàng nhưng sau đó chặn liên lạc, không giao." }
-          ]
-        }
       ]
     }
   ];
@@ -2714,9 +2714,9 @@ function SkillsSection() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
         <div className="text-center mb-10">
           <span className="inline-block bg-blue-500/10 text-blue-600 text-xs font-bold uppercase px-4 py-2 rounded-full mb-3">Kỹ năng thực hành</span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-ink uppercase">KỸ NĂNG PHÒNG TRÁNH VÀ XỬ LÝ</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-ink uppercase">KỸ NĂNG XỬ LÝ</h2>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <div className="space-y-3 sm:space-y-4">
             {actions.map((card, idx) => (
               <div key={idx} className={`act-card ${card.color} rounded-xl p-4 sm:p-5 border`}>
@@ -2732,7 +2732,7 @@ function SkillsSection() {
               </div>
             ))}
           </div>
-          <div>
+          {/* <div>
             <h3 className="font-bold text-base sm:text-lg uppercase mb-4 sm:mb-5">Kỹ Năng Phòng Tránh Nâng Cao</h3>
             <div className="adv-list space-y-2 sm:space-y-3">
               {advanced.map((skill, idx) => (
@@ -2742,9 +2742,9 @@ function SkillsSection() {
                 </div>
               ))}
             </div>
-          </div>
-          <div className="skills-img flex justify-center items-start">
-            <img src="/images/section10-devices.jpg" alt="2FA Protection" className="rounded-2xl shadow-lg w-full max-w-xs" loading="lazy" />
+          </div> */}
+          <div className="skills-img flex justify-center items-start h-auto relative overflow-hidden rounded-2xl">
+            <img src="/images/section10(2)-devices.jpg" alt="2FA Protection" className=" absolute shadow-lg w-full max-w-xl top-[50%] translate-y-[-50%]" loading="lazy" />
           </div>
         </div>
       </div>
@@ -3190,7 +3190,8 @@ export default function Home() {
     { slideId: 'spotting02', revealLevel: 2, align: 'end' },
 
     { slideId: 'resolving', revealLevel: 0, align: 'start' },
-    { slideId: 'resolving', revealLevel: 1, align: 'end' },
+    { slideId: 'resolving', revealLevel: 1, align: 'center' },
+    { slideId: 'resolving', revealLevel: 2, align: 'end' },
     { slideId: 'preventative', revealLevel: 0, align: 'start' },
     { slideId: 'preventative', revealLevel: 1, align: 'end' },
     { slideId: 'supports', revealLevel: 0, align: 'start' },
@@ -3235,7 +3236,7 @@ export default function Home() {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     // Connect observer targets
-    ['intro', 'long-content', 'video-slide', 'conclusion'].forEach((id) => {
+    ['music-video', 'introduction', 'fraud-types', 'spotting', 'resolving', 'preventative', 'supports', 'scenario', 'rebuttal', 'poster', 'team'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
