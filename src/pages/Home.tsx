@@ -183,7 +183,7 @@ function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="relative order-2 lg:order-1 hero-image">
             <div className="rounded-2xl overflow-hidden shadow-2xl lg:transform lg:-rotate-2 lg:hover:rotate-0 transition-all duration-700">
-              <img src="/images/hero-hands.jpg" alt="Nhận diện lừa đảo" className="w-full h-auto object-cover" loading="eager" />
+              <img src="./images/hero-hands.jpg" alt="Nhận diện lừa đảo" className="w-full h-auto object-cover" loading="eager" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/30 to-transparent" />
             </div>
             <div className="absolute -bottom-4 -right-4 bg-amber text-white rounded-xl px-4 py-2 shadow-lg hidden sm:block" style={{ animation: 'bounce 3s infinite' }}>
@@ -663,6 +663,7 @@ export function VideoSection() {
               <video
                 ref={videoRef}
                 src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/AnToanSo.webm"
+                // src="./videos/AnToanSo.webm"
                 className="w-full h-full object-cover pointer-events-none z-50"
                 loop
                 muted={isMuted}
@@ -1167,6 +1168,7 @@ export function ScenarioVideoSection() {
               <video
                 ref={videoRef}
                 src="https://github.com/piCreature99/online-safety-site/releases/download/v1.0.0/Scenario.webm"
+                // src="./videos/Scenario.webm"
                 className="w-full h-full object-cover transform-gpu will-change-transform pointer-events-none"
                 loop
                 muted={isMuted}
@@ -1330,7 +1332,7 @@ export function PosterSection() {
     return () => ctx.revert();
   }, []);
 
-  const posterSrc = "/images/poster3.png"; // Path to your asset
+  const posterSrc = "./images/poster3.png"; // Path to your asset
 
   return (
     <section ref={containerRef} className="py-12 lg:py-20 bg-cream overflow-hidden border-t border-border">
@@ -1473,7 +1475,7 @@ function StatsSection() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 items-center">
           <div className="lg:col-span-2 stats-img">
             <div className="rounded-2xl overflow-hidden shadow-xl">
-              <img src="/images/stats-silhouette.jpg" alt="Bức tranh lừa đảo" className="w-full h-auto object-cover" loading="lazy" />
+              <img src="./images/stats-silhouette.jpg" alt="Bức tranh lừa đảo" className="w-full h-auto object-cover" loading="lazy" />
             </div>
           </div>
           <div className="lg:col-span-3 space-y-4">
@@ -1565,7 +1567,7 @@ function FraudTypesSection() {
 
         {/* Illustration image for desktop */}
         <div className="fraud-img mb-8 rounded-2xl overflow-hidden shadow-md hidden lg:block">
-          <img src="/images/fraud-types-illustration.jpg" alt="6 hình thức lừa đảo" className="w-full h-48 object-cover" loading="lazy" />
+          <img src="./images/fraud-types-illustration.jpg" alt="6 hình thức lừa đảo" className="w-full h-48 object-cover" loading="lazy" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -2157,7 +2159,7 @@ function PsychologySection() {
         </div>
 
         <div className="psych-img mb-8 rounded-2xl overflow-hidden shadow-md hidden lg:block">
-          <img src="/images/psychology-illustration.jpg" alt="6 yếu tố tâm lý" className="w-full h-48 object-cover" loading="lazy" />
+          <img src="./images/psychology-illustration.jpg" alt="6 yếu tố tâm lý" className="w-full h-48 object-cover" loading="lazy" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -2224,12 +2226,12 @@ function PsychologySection() {
 function ChannelsSection() {
   const ref = useRef<HTMLElement>(null);
   const channels = [
-    { img: '/images/channel-social.jpg', title: 'Mạng xã hội', desc: 'Facebook, Zalo, Telegram là các kênh phổ biến nhất. Kẻ lừa đảo tạo tài khoản giả, kết bạn và dần lừa nạn nhân.', warnings: ['Không kết bạn người lạ', 'Kiểm tra lịch sử tài khoản', 'Không chia sẻ thông tin cá nhân'] },
-    { img: '/images/channel-website.jpg', title: 'Website giả mạo', desc: 'Sao chép giao diện trang web chính thức với URL gần giống, thiếu chứng chỉ bảo mật SSL.', warnings: ['Kiểm tra URL kỹ lưỡng', 'Tìm biểu tượng ổ khóa', 'Không đăng nhập qua link lạ'] },
-    { img: '/images/channel-app.jpg', title: 'Ứng dụng giả mạo', desc: 'App giả mạo tải từ nguồn không chính thức, chứa mã độc đánh cắp dữ liệu.', warnings: ['Chỉ tải từ App Store/CH Play', 'Kiểm tra nhà phát triển', 'Đọc đánh giá người dùng'] },
-    { img: '/images/channel-qr.jpg', title: 'Mã QR độc hại', desc: 'Mã QR dán ở nơi công cộng chứa link độc hại. Quét xong bị chuyển hướng sang trang lừa đảo.', warnings: ['Không quét QR lạ', 'Kiểm tra link sau khi quét', 'Cẩn thận với QR ở nơi công cộng'] },
-    { img: '/images/channel-email.jpg', title: 'Email & SMS lừa đảo', desc: 'Tin nhắn mạo danh ngân hàng, cơ quan nhà nước với link độc hại.', warnings: ['Không click link trong email lạ', 'Kiểm tra địa chỉ người gửi', 'Liên hệ trực tiếp để xác minh'] },
-    { img: '/images/channel-crypto.jpg', title: 'Ví điện tử & Tiền ảo', desc: 'Các nền tảng ví kỹ thuật số, sàn giao dịch crypto giả mạo.', warnings: ['Chỉ dùng sàn uy tín', 'Không chia sẻ private key', 'Bật 2FA cho mọi giao dịch'] },
+    { img: './images/channel-social.jpg', title: 'Mạng xã hội', desc: 'Facebook, Zalo, Telegram là các kênh phổ biến nhất. Kẻ lừa đảo tạo tài khoản giả, kết bạn và dần lừa nạn nhân.', warnings: ['Không kết bạn người lạ', 'Kiểm tra lịch sử tài khoản', 'Không chia sẻ thông tin cá nhân'] },
+    { img: './images/channel-website.jpg', title: 'Website giả mạo', desc: 'Sao chép giao diện trang web chính thức với URL gần giống, thiếu chứng chỉ bảo mật SSL.', warnings: ['Kiểm tra URL kỹ lưỡng', 'Tìm biểu tượng ổ khóa', 'Không đăng nhập qua link lạ'] },
+    { img: './images/channel-app.jpg', title: 'Ứng dụng giả mạo', desc: 'App giả mạo tải từ nguồn không chính thức, chứa mã độc đánh cắp dữ liệu.', warnings: ['Chỉ tải từ App Store/CH Play', 'Kiểm tra nhà phát triển', 'Đọc đánh giá người dùng'] },
+    { img: './images/channel-qr.jpg', title: 'Mã QR độc hại', desc: 'Mã QR dán ở nơi công cộng chứa link độc hại. Quét xong bị chuyển hướng sang trang lừa đảo.', warnings: ['Không quét QR lạ', 'Kiểm tra link sau khi quét', 'Cẩn thận với QR ở nơi công cộng'] },
+    { img: './images/channel-email.jpg', title: 'Email & SMS lừa đảo', desc: 'Tin nhắn mạo danh ngân hàng, cơ quan nhà nước với link độc hại.', warnings: ['Không click link trong email lạ', 'Kiểm tra địa chỉ người gửi', 'Liên hệ trực tiếp để xác minh'] },
+    { img: './images/channel-crypto.jpg', title: 'Ví điện tử & Tiền ảo', desc: 'Các nền tảng ví kỹ thuật số, sàn giao dịch crypto giả mạo.', warnings: ['Chỉ dùng sàn uy tín', 'Không chia sẻ private key', 'Bật 2FA cho mọi giao dịch'] },
   ];
 
   useEffect(() => {
@@ -2335,7 +2337,7 @@ export function PsychologicalManipulationSection() {
   return (
     <section ref={sectionRef} className="py-16 sm:py-24 bg-cream overflow-hidden">
       <div className="relative left-[50%] -translate-x-1/2 max-w-[90vw] psych-img mb-8 rounded-2xl overflow-hidden shadow-md hidden lg:block">
-        <img src="/images/psychology-illustration.jpg" alt="6 yếu tố tâm lý" className="w-full h-48 object-cover" loading="lazy" />
+        <img src="./images/psychology-illustration.jpg" alt="6 yếu tố tâm lý" className="w-full h-48 object-cover" loading="lazy" />
       </div>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
 
@@ -2513,7 +2515,7 @@ function VictimsSection() {
           </div>
           <div className="victim-img flex justify-center">
             <div className="relative">
-              <img src="/images/section7-passport.jpg" alt="Identity theft" className="w-48 h-48 sm:w-56 sm:h-56 object-cover rounded-2xl shadow-2xl" loading="lazy" />
+              <img src="./images/section7-passport.jpg" alt="Identity theft" className="w-48 h-48 sm:w-56 sm:h-56 object-cover rounded-2xl shadow-2xl" loading="lazy" />
               <div className="absolute -bottom-3 -right-3 bg-amber text-white rounded-xl px-3 py-1.5 shadow-lg">
                 <p className="text-xs font-bold">Identity Theft</p>
               </div>
@@ -2577,7 +2579,7 @@ function PoorPeopleSection() {
 
         {/* Image for desktop */}
         <div className="poor-img mb-8 rounded-2xl overflow-hidden shadow-md hidden lg:block">
-          <img src="/images/poor-people-illustration.jpg" alt="Ngườii nghèo và lừa đảo" className="w-full h-48 object-cover" loading="lazy" />
+          <img src="./images/poor-people-illustration.jpg" alt="Ngườii nghèo và lừa đảo" className="w-full h-48 object-cover" loading="lazy" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
@@ -2745,7 +2747,7 @@ function SkillsSection() {
             </div>
           </div> */}
           <div className="relative skills-img flex justify-center items-start h-auto relative overflow-hidden rounded-2xl">
-            <img src="/images/section11ratio-crystal.jpg" alt="2FA Protection" className=" absolute shadow-lg w-full max-w-xl top-[50%] translate-y-[-50%]" loading="lazy" />
+            <img src="./images/section11ratio-crystal.jpg" alt="2FA Protection" className=" absolute shadow-lg w-full max-w-xl top-[50%] translate-y-[-50%]" loading="lazy" />
           </div>
         </div>
       </div>
@@ -2759,11 +2761,11 @@ function SkillsSection() {
 function MessagesSection() {
   const ref = useRef<HTMLElement>(null);
   const msgs = [
-    { num: 1, title: 'Lòng tham là cái bẫy lớn nhất', desc: '72.6% lừa đảo nhắm vào tài chính. Đối tượng lừa đảo luôn lợi dụng lòng tham, mong muốn giàu nhanh. Không có bữa trưa nào là miễn phí.', img: '/images/section11-treasure.jpg' },
-    { num: 2, title: 'CHẬM LẠI — KIỂM TRA — DỪNG — KHÔNG GỬI', desc: 'Nguyên tắc vàng tự bảo vệ: Khi nhận yêu cầu chuyển tiền hay cung cấp thông tin, hãy chậm lại, kiểm tra, dừng nếu đáng ngờ.', img: '/images/section11-pause.jpg' },
-    { num: 3, title: 'Không cán bộ nhà nước nào điều tra qua điện thoại', desc: 'Cơ quan công quyền không bao giờ gọi điện yêu cầu chuyển tiền. Gặp trường hợp này là lừa đảo 100%.', img: '/images/section11-government.jpg' },
-    { num: 4, title: 'Tấn công tâm lý là vũ khí chính', desc: 'Lừa đảo trực tuyến không chỉ là công nghệ, mà là nghệ thuật đánh vào tâm lý: lòng tham, sợ hãi, tò mò.', img: '/images/section11-crystal.jpg' },
-    { num: 5, title: 'Cảnh giác là lá chắn — Chia sẻ là trách nhiệm', desc: 'Khi phát hiện lừa đảo, hãy báo cáo tại canhbao.khonggianmang.vn và cảnh báo người thân.', img: '/images/section11-shield.jpg' },
+    { num: 1, title: 'Lòng tham là cái bẫy lớn nhất', desc: '72.6% lừa đảo nhắm vào tài chính. Đối tượng lừa đảo luôn lợi dụng lòng tham, mong muốn giàu nhanh. Không có bữa trưa nào là miễn phí.', img: './images/section11-treasure.jpg' },
+    { num: 2, title: 'CHẬM LẠI — KIỂM TRA — DỪNG — KHÔNG GỬI', desc: 'Nguyên tắc vàng tự bảo vệ: Khi nhận yêu cầu chuyển tiền hay cung cấp thông tin, hãy chậm lại, kiểm tra, dừng nếu đáng ngờ.', img: './images/section11-pause.jpg' },
+    { num: 3, title: 'Không cán bộ nhà nước nào điều tra qua điện thoại', desc: 'Cơ quan công quyền không bao giờ gọi điện yêu cầu chuyển tiền. Gặp trường hợp này là lừa đảo 100%.', img: './images/section11-government.jpg' },
+    { num: 4, title: 'Tấn công tâm lý là vũ khí chính', desc: 'Lừa đảo trực tuyến không chỉ là công nghệ, mà là nghệ thuật đánh vào tâm lý: lòng tham, sợ hãi, tò mò.', img: './images/section11-crystal.jpg' },
+    { num: 5, title: 'Cảnh giác là lá chắn — Chia sẻ là trách nhiệm', desc: 'Khi phát hiện lừa đảo, hãy báo cáo tại canhbao.khonggianmang.vn và cảnh báo người thân.', img: './images/section11-shield.jpg' },
   ];
 
   useEffect(() => {
@@ -2820,9 +2822,9 @@ function MessagesSection() {
 function ActionSection() {
   const ref = useRef<HTMLElement>(null);
   const actions = [
-    { num: 1, title: 'ĐỐI VỚI CÁ NHÂN', img: '/images/section12-safe.jpg', items: ['Không cho mượn tài khoản ngân hàng dưới bất kỳ lý do nào', "Cảnh giác 'việc nhẹ lương cao', 'đầu tư không rủi ro'", 'Bảo vệ thông tin cá nhân như bảo vệ tiền bạc', 'Kích hoạt bảo mật 2 lớp (2FA) cho mọi tài khoản', 'Không click link, tải file từ nguồn không xác định'] },
-    { num: 2, title: 'ĐỐI VỚI CỘNG ĐỒNG', img: '/images/section12-community.jpg', items: ['Chia sẻ kiến thức phòng chống lừa đảo cho người thân, người lớn tuổi', 'Không chế giễu nạn nhân - sự thông cảm giúp họ lên tiếng', 'Tích cực báo cáo vụ lừa đảo cho cơ quan chức năng', 'Cùng nhau xây dựng cộng đồng cảnh giác, an toàn'] },
-    { num: 3, title: 'ĐỐI VỚI CHÍNH SÁCH', img: '/images/section12-book.jpg', items: ['Tăng cường giáo dục an toàn mạng tại vùng nông thôn, miền núi', 'Hỗ trợ pháp lý miễn phí cho nạn nhân có hoàn cảnh khó khăn', 'Xây dựng cơ chế bảo vệ nạn nhân, khuyến khích tố giác', 'Tăng cường hợp tác quốc tế truy bắt tội phạm xuyên biên giớii'] },
+    { num: 1, title: 'ĐỐI VỚI CÁ NHÂN', img: './images/section12-safe.jpg', items: ['Không cho mượn tài khoản ngân hàng dưới bất kỳ lý do nào', "Cảnh giác 'việc nhẹ lương cao', 'đầu tư không rủi ro'", 'Bảo vệ thông tin cá nhân như bảo vệ tiền bạc', 'Kích hoạt bảo mật 2 lớp (2FA) cho mọi tài khoản', 'Không click link, tải file từ nguồn không xác định'] },
+    { num: 2, title: 'ĐỐI VỚI CỘNG ĐỒNG', img: './images/section12-community.jpg', items: ['Chia sẻ kiến thức phòng chống lừa đảo cho người thân, người lớn tuổi', 'Không chế giễu nạn nhân - sự thông cảm giúp họ lên tiếng', 'Tích cực báo cáo vụ lừa đảo cho cơ quan chức năng', 'Cùng nhau xây dựng cộng đồng cảnh giác, an toàn'] },
+    { num: 3, title: 'ĐỐI VỚI CHÍNH SÁCH', img: './images/section12-book.jpg', items: ['Tăng cường giáo dục an toàn mạng tại vùng nông thôn, miền núi', 'Hỗ trợ pháp lý miễn phí cho nạn nhân có hoàn cảnh khó khăn', 'Xây dựng cơ chế bảo vệ nạn nhân, khuyến khích tố giác', 'Tăng cường hợp tác quốc tế truy bắt tội phạm xuyên biên giớii'] },
   ];
 
   useEffect(() => {
