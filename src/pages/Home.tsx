@@ -1907,13 +1907,13 @@ export function FraudScenariosAccordion({ activeAction }: AccordionProps) {
   // Hiệu ứng load-in ban đầu khi vừa cuộn tới Section này
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.group-trigger-bar', {
-        y: 25,
+      gsap.fromTo('.group-trigger-bar', {
+        y: 50,
         opacity: 0,
         duration: 0.6,
         stagger: 0.15,
         ease: 'power3.out'
-      });
+      }, { y: 0, opacity: 1, duration: 1.6, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 75%' } });
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -2070,11 +2070,12 @@ export function FraudScenariosAccordion({ activeAction }: AccordionProps) {
               key={group.id}
               value={group.id}
               id={`accordion-${group.id}`}
-              className="border border-border rounded-2xl bg-white shadow-sm overflow-hidden"
+              data-value={group.id}
+              className="group-trigger-bar border border-border rounded-2xl bg-white shadow-sm overflow-hidden"
             >
               <Accordion.Header className="flex">
                 {/* Vô hiệu hóa pointer-events để tránh việc click chuột trực tiếp phá vỡ luồng Timeline */}
-                <Accordion.Trigger className="group-trigger-bar pointer-events-none flex w-full items-center justify-between p-4 sm:p-5 bg-white text-left outline-none">
+                <Accordion.Trigger className=" pointer-events-none flex w-full items-center justify-between p-4 sm:p-5 bg-white text-left outline-none">
                   <div className="space-y-1 pr-4">
                     <h3 className="text-sm sm:text-base font-black text-ink tracking-wide uppercase">
                       {group.title}
@@ -2743,8 +2744,8 @@ function SkillsSection() {
               ))}
             </div>
           </div> */}
-          <div className="skills-img flex justify-center items-start h-auto relative overflow-hidden rounded-2xl">
-            <img src="/images/section10(2)-devices.jpg" alt="2FA Protection" className=" absolute shadow-lg w-full max-w-xl top-[50%] translate-y-[-50%]" loading="lazy" />
+          <div className="relative skills-img flex justify-center items-start h-auto relative overflow-hidden rounded-2xl">
+            <img src="/images/section11ratio-crystal.jpg" alt="2FA Protection" className=" absolute shadow-lg w-full max-w-xl top-[50%] translate-y-[-50%]" loading="lazy" />
           </div>
         </div>
       </div>
@@ -2883,13 +2884,14 @@ function TeamSection() {
   const [openTeam, setOpenTeam] = useState(false);
 
   const members = [
-    { name: 'Vũ Đức Minh', initials: 'VDM', color: 'from-amber to-amber-dark', emoji: '👤' },
-    { name: 'Nguyễn Hoài An', initials: 'NHA', color: 'from-emerald-400 to-emerald-600', emoji: '👤' },
+    { name: 'Vũ Đức Minh', initials: 'VDM', color: 'from-indigo-600 to-amber-500', emoji: '👤' },
+    { name: 'Nguyễn Hoài An', initials: 'NHA', color: 'from-emerald-400 to-amber-600', emoji: '👤' },
     { name: 'Nguyễn Thái Sơn Lâm', initials: 'NTSL', color: 'from-copper to-copper-dark', emoji: '👤' },
     { name: 'Trần Quốc Bảo', initials: 'TQB', color: 'from-violet-400 to-violet-600', emoji: '👤' },
     { name: 'Huỳnh Tấn An', initials: 'HTA', color: 'from-sky-400 to-sky-600', emoji: '👤' },
     { name: 'Phạm Thái Nhật Anh', initials: 'PTNA', color: 'from-pink-400 to-pink-600', emoji: '👤' },
     { name: 'Ka Lục Nguyệt', initials: 'KLN', color: 'from-rose-400 to-rose-600', emoji: '👤' },
+    { name: 'Nguyễn Anh Khoa', initials: 'NAK', color: 'from-orange-400 to-orange-600', emoji: '👤' },
   ];
 
   useEffect(() => {
@@ -2908,7 +2910,7 @@ function TeamSection() {
             <span className="inline-block bg-amber/20 text-amber text-xs font-bold uppercase px-4 py-2 rounded-full mb-3">Đội ngũ</span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase mb-3">THÀNH VIÊN NHÓM</h2>
             <p className="text-white/50 max-w-xl mx-auto text-sm mb-8">
-              Nhóm 7 sinh viên thực hiện dự án giáo dục phòng chống lừa đảo trực tuyến.
+              Nhóm 8 sinh viên thực hiện dự án giáo dục phòng chống lừa đảo trực tuyến.
             </p>
 
             {/* Click to open popup */}
@@ -2923,7 +2925,7 @@ function TeamSection() {
                   </div>
                 ))}
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-amber text-xs font-bold border-2 border-ink shadow-md">
-                  +3
+                  +4
                 </div>
               </div>
               <div className="text-left">
