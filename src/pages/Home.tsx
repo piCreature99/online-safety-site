@@ -502,6 +502,9 @@ export function VideoSection() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // 🚀 SỬA LỖI 1: Tạo trạng thái phản xạ (reactive state) riêng cho âm lượng 
   // Tránh việc đọc trực tiếp thuộc tính biến đổi 'videoRef.current.volume' trong JSX
   const [volume, setVolume] = useState(1);
@@ -609,6 +612,34 @@ export function VideoSection() {
     e.stopPropagation(); // Tường lửa chặn đứng thác tác động lên khung slide cha
   };
 
+
+
+  const handleMouseMove = () => {
+    // 1. Instantly show the overlay on movement
+    setIsOverlayVisible(true);
+
+    // 2. Clear the previous timer so it doesn't fade out prematurely
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    // 3. Set a new timer. If no movement for 1.5 seconds, hide it.
+    timeoutRef.current = setTimeout(() => {
+      setIsOverlayVisible(false);
+    }, 1500); // 1500ms = 1.5 seconds of no movement
+  };
+
+  const handleMouseLeave = () => {
+    // Instantly hide when the mouse leaves the container entirely
+    setIsOverlayVisible(false);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
+  // Cleanup timer on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   return (
     <section ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-cream">
       {/* <FloatingParticles count={25} color="#C4882B" /> */}
@@ -659,6 +690,8 @@ export function VideoSection() {
               onClick={blockSlideTrigger}
               onMouseDown={blockSlideTrigger}
               onMouseUp={blockSlideTrigger}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
             >
               <video
                 ref={videoRef}
@@ -673,7 +706,7 @@ export function VideoSection() {
               />
 
               {/* Overlay HUD Layer */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 z-10">
+              <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent ${isOverlayVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 flex flex-col justify-between p-4 z-10`}>
 
                 {/* Header Sub-Badge */}
                 <div className="flex justify-between items-start">
@@ -1040,6 +1073,20 @@ export function ScenarioVideoSection() {
   // 🚀 ĐỒNG BỘ FIX 1: Thêm reactive state cho volume để quản lý render màu thanh trượt
   const [volume, setVolume] = useState(1);
 
+  const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(false);
+  // Using ReturnType<typeof setTimeout> is the safest cross-platform way 
+  // to type a timer reference between Node.js and the Browser environments.
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Cleanup timer on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -1125,6 +1172,29 @@ export function ScenarioVideoSection() {
     e.stopPropagation(); // Lớp lá chắn bảo vệ bao bọc toàn bộ khung trình phát video
   };
 
+  const handleMouseMove = (): void => {
+    // 1. Instantly show the overlay on movement
+    setIsOverlayVisible(true);
+
+    // 2. Clear the previous timer so it doesn't fade out prematurely
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // 3. Set a new timer. If no movement for 1.5 seconds, hide it.
+    timeoutRef.current = setTimeout(() => {
+      setIsOverlayVisible(false);
+    }, 1500); // 1500ms = 1.5 seconds of no movement
+  };
+
+  const handleMouseLeave = (): void => {
+    // Instantly hide when the mouse leaves the container entirely
+    setIsOverlayVisible(false);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  };
+
   return (
     <section ref={sectionRef} className="py-16 lg:py-24 bg-cream/30 overflow-hidden border-t border-border">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
@@ -1164,6 +1234,8 @@ export function ScenarioVideoSection() {
               onClick={blockSlideTrigger}
               onMouseDown={blockSlideTrigger}
               onMouseUp={blockSlideTrigger}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
             >
               <video
                 ref={videoRef}
@@ -1178,7 +1250,7 @@ export function ScenarioVideoSection() {
               />
 
               {/* Dynamic Overlay Interface */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 z-10">
+              <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent ${isOverlayVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300 flex flex-col justify-between p-4 z-10`}>
 
                 <div className="flex justify-between items-start">
                   <span className="bg-red-600/90 backdrop-blur-sm text-white font-bold text-[9px] tracking-wider px-2 py-0.5 rounded uppercase flex items-center gap-1">
@@ -1332,6 +1404,11 @@ export function PosterSection() {
     return () => ctx.revert();
   }, []);
 
+  const blockSlideTrigger = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation(); // Lớp lá chắn bảo vệ bao bọc toàn bộ khung trình phát video
+  };
+
   const posterSrc = "./images/poster3.png"; // Path to your asset
 
   return (
@@ -1358,7 +1435,9 @@ export function PosterSection() {
 
             <div className="pt-2 flex flex-col sm:flex-row lg:flex-col gap-2">
               <button
-                onClick={() => setIsOpen(true)}
+                onClick={(e: any) => { setIsOpen(true); blockSlideTrigger(e); }}
+                onMouseDown={blockSlideTrigger}
+                onMouseUp={blockSlideTrigger}
                 className="inline-flex items-center justify-center gap-2 bg-white hover:bg-border border border-border text-ink text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm group"
               >
                 <Maximize2 className="w-3.5 h-3.5 text-amber group-hover:scale-110 transition-transform" />
@@ -1369,6 +1448,9 @@ export function PosterSection() {
                 href={posterSrc}
                 download="Cam-Nang-An-Toan-So.jpg"
                 className="inline-flex items-center justify-center gap-2 bg-amber hover:bg-amber/90 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm"
+                // onClick={blockSlideTrigger}
+                onMouseDown={blockSlideTrigger}
+                onMouseUp={blockSlideTrigger}
               >
                 <Download className="w-3.5 h-3.5" />
                 TẢI XUỐNG BẢN IN
@@ -1379,7 +1461,9 @@ export function PosterSection() {
           {/* MAXIMUM SCALE IMAGE COLUMN (Occupies 9 out of 12 columns on desktop) */}
           <div className="lg:col-span-9 poster-frame">
             <div
-              onClick={() => setIsOpen(true)}
+              onClick={(e: any) => { setIsOpen(true); blockSlideTrigger(e); }}
+              onMouseDown={blockSlideTrigger}
+              onMouseUp={blockSlideTrigger}
               className="relative rounded-2xl overflow-hidden shadow-xl bg-white border border-border cursor-zoom-in group transition-all duration-500 hover:shadow-2xl"
             >
               <img
@@ -1403,7 +1487,9 @@ export function PosterSection() {
       </div>
 
       {/* LIGHTBOX MODAL CONTAINER (Radix UI Primitive Integration) */}
-      <Dialog2.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog2.Root open={isOpen} onOpenChange={setIsOpen}
+
+      >
         <Dialog2.Portal>
 
           {/* Backdrop Shadow Backdrop Overlay */}
@@ -1411,7 +1497,11 @@ export function PosterSection() {
 
           {/* Content Stage Frame Box Wrapper */}
           <Dialog2.Content className="fixed inset-4 sm:inset-6 md:inset-10 z-50 flex items-center justify-center outline-none focus:outline-none">
-            <div className="relative max-w-full max-h-full flex flex-col bg-white rounded-2xl shadow-2xl p-2 md:p-3 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div
+              // onClick={blockSlideTrigger}
+              onMouseDown={blockSlideTrigger}
+              onMouseUp={blockSlideTrigger}
+              className="relative max-w-full max-h-full flex flex-col bg-white rounded-2xl shadow-2xl p-2 md:p-3 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
 
               {/* Floating Frame Title Hook for Accessibility */}
               <Dialog2.Title className="sr-only">
@@ -1440,7 +1530,7 @@ export function PosterSection() {
                 </div>
                 <a
                   href={posterSrc}
-                  download
+                  download="Cam-Nang-An-Toan-So.jpg"
                   className="text-amber font-bold hover:underline"
                 >
                   Tải file ảnh gốc
